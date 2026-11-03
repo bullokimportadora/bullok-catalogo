@@ -178,6 +178,14 @@ input{font-family:inherit;}
 .site-foot__note{margin-top:14px;font-size:12.5px;color:rgba(255,255,255,.5);}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(22px);background:#15161A;color:#fff;padding:13px 20px;border-radius:11px;font-size:14px;font-weight:600;box-shadow:0 10px 34px rgba(0,0,0,.32);z-index:120;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;max-width:90vw;text-align:center;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.hero__video{display:inline-flex;align-items:center;gap:10px;margin-top:22px;background:var(--brand);color:#06130A;border:0;font-family:inherit;font-weight:800;font-size:15px;padding:13px 22px;border-radius:12px;cursor:pointer;box-shadow:0 8px 24px rgba(99,255,1,.25);transition:transform .15s,box-shadow .15s;}
+.hero__video:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(99,255,1,.35);}
+.hero__video svg{flex:0 0 auto;} .hero__video small{font-weight:600;opacity:.65;font-size:12.5px;}
+.vmodal{position:fixed;inset:0;z-index:200;background:rgba(6,8,10,.88);display:flex;align-items:center;justify-content:center;padding:20px;}
+.vmodal[hidden]{display:none!important;}
+.vmodal__card{position:relative;width:100%;max-width:400px;}
+.vmodal__x{position:absolute;top:-48px;right:0;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;border:0;font-size:25px;line-height:1;cursor:pointer;}
+.vmodal video{width:100%;max-height:82vh;border-radius:16px;background:#000;display:block;box-shadow:0 20px 60px rgba(0,0,0,.5);}
 .lightbox{position:fixed;inset:0;background:rgba(10,14,22,.9);z-index:80;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;visibility:hidden;transition:opacity .2s;}
 .lightbox.open{opacity:1;visibility:visible;}
 .lb-img{width:min(92vw,92vh);height:min(92vw,92vh);border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);background:#0E0E11;}
@@ -219,6 +227,7 @@ input{font-family:inherit;}
     <span class="hero__tag"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="7" width="15" height="10" rx="1"/><path d="M16 10h4l3 3v4h-7z"/><circle cx="6" cy="18" r="2"/><circle cx="19" cy="18" r="2"/></svg> Envíos a todo el país</span>
     <span class="hero__tag"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.4 8.4 0 0 1-11.7 7.7L3 21l1.9-6.2A8.5 8.5 0 1 1 21 11.5Z"/></svg> Pedidos por WhatsApp</span>
   </div>
+  <button class="hero__video" id="openVideo"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Mira cómo hacer tu pedido <small>· video 1 min</small></button>
 </section>
 <section class="imp" id="importacion">
   <div class="imp__inner">
@@ -252,6 +261,7 @@ input{font-family:inherit;}
   </div>
 </div></footer>
 <div class="lightbox" id="lightbox"><span class="lightbox__x" id="lbX">×</span><div id="lbImg" class="lb-img"></div></div>
+<div class="vmodal" id="videoModal" hidden><div class="vmodal__card"><button class="vmodal__x" id="videoX" aria-label="Cerrar">×</button><video id="tutVideo" src="tutorial.mp4" controls playsinline preload="none" poster="brand/og_preview.png"></video></div></div>
 <div class="overlay" id="overlay"></div>
 <div class="welcome" id="welcome" hidden>
   <div class="welcome__card">
@@ -658,6 +668,8 @@ function openCart(){document.getElementById('drawer').classList.add('open');docu
 function closeCart(){document.getElementById('drawer').classList.remove('open');document.getElementById('overlay').classList.remove('open');}
 function showWelcome(){try{if(localStorage.getItem('bullok_welcome')==='1')return;}catch(e){}const w=document.getElementById('welcome');if(w)w.hidden=false;}
 function closeWelcome(){const w=document.getElementById('welcome');if(w)w.hidden=true;try{localStorage.setItem('bullok_welcome','1');}catch(e){}}
+function openVideo(){const m=document.getElementById('videoModal'),v=document.getElementById('tutVideo');if(!m)return;m.hidden=false;if(v){try{v.currentTime=0;v.play();}catch(e){}}}
+function closeVideo(){const m=document.getElementById('videoModal'),v=document.getElementById('tutVideo');if(!m)return;if(v){try{v.pause();}catch(e){}}m.hidden=true;}
 
 /* ---- Modo edición ---- */
 function enterAdmin(){
@@ -687,6 +699,9 @@ if(!SEP){
 setupCues();
 document.getElementById('welcomeOk').onclick=closeWelcome;
 showWelcome();
+document.getElementById('openVideo').onclick=openVideo;
+document.getElementById('videoX').onclick=closeVideo;
+document.getElementById('videoModal').onclick=function(e){if(e.target===this)closeVideo();};
 document.getElementById('openCart').onclick=openCart;
 document.getElementById('closeCart').onclick=closeCart;
 document.getElementById('overlay').onclick=closeCart;
