@@ -231,7 +231,7 @@ input{font-family:inherit;}
 <main class="grid-wrap"><div class="grid-head"><h2 id="catTitle">Todos los productos</h2><span id="catCount"></span></div><div class="grid" id="grid"></div></main>
 <footer class="site-foot"><div class="site-foot__inner">
   <div class="site-foot__col"><h3>Bullok</h3><p>Importación y distribución al por mayor.</p><p>Medellín, Colombia.</p></div>
-  <div class="site-foot__col"><h3>Contacto</h3><p><a id="footWa">Escríbenos por WhatsApp</a></p><p><a id="adminLink" style="opacity:.5;font-size:12px">· Modo edición ·</a></p></div>
+  <div class="site-foot__col"><h3>Contacto</h3><p><a id="footWa">Escríbenos por WhatsApp</a></p></div>
 </div></footer>
 <div class="lightbox" id="lightbox"><span class="lightbox__x" id="lbX">×</span><div id="lbImg" class="lb-img"></div></div>
 <div class="overlay" id="overlay"></div>
@@ -672,7 +672,7 @@ loadCust();
 document.getElementById('search').oninput=e=>{busqueda=e.target.value;renderGrid();};
 document.getElementById('footWa').onclick=e=>{e.preventDefault();openLink('https://wa.me/'+CONFIG.whatsapp);};
 document.getElementById('impWa').onclick=()=>openLink('https://wa.me/'+CONFIG.whatsapp+'?text='+encodeURIComponent('Hola Bullok, quiero cotizar una importación desde China de:\n\n(describe el producto, la cantidad y adjunta una foto o referencia si tienes)'));
-document.getElementById('adminLink').onclick=e=>{e.preventDefault();enterAdmin();};
+if(location.hash.toLowerCase().indexOf('editar')>=0)enterAdmin();
 document.getElementById('btnExitAdmin').onclick=exitAdmin;
 document.getElementById('btnDownload').onclick=downloadData;
 document.getElementById('lbX').onclick=closeLightbox;
