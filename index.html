@@ -257,7 +257,7 @@ input{font-family:inherit;}
         <div><label>Teléfono <span class="req">*</span></label><input id="cTel" type="tel" inputmode="tel" autocomplete="tel" placeholder="300 000 0000"></div>
         <div><label>Ciudad <span class="req">*</span></label><input id="cCiudad" type="text" placeholder="Ciudad"></div>
         <div><label>Vendedor que atiende</label><input id="cVendedor" type="text" placeholder="Nombre del vendedor"></div>
-        <div class="f-full"><label>Dirección de entrega</label><input id="cDireccion" type="text" autocomplete="street-address" placeholder="Dirección / barrio"></div>
+        <div class="f-full"><label>Dirección de entrega <span class="req">*</span></label><input id="cDireccion" type="text" autocomplete="street-address" placeholder="Dirección / barrio"></div>
       </div>
       </div>
     </div>
@@ -328,6 +328,11 @@ function sepStyles(){return '*{box-sizing:border-box;margin:0;padding:0;}'
  +'.sep-title{font-size:19px;font-weight:800;letter-spacing:.04em;color:#fff;} .sep-no{font-weight:700;color:#63FF01;margin-top:3px;} .sep-fch{color:#9AA0AA;font-size:11px;margin-top:2px;}'
  +'.sep-body{padding:14px 24px 18px;}'
  +'.sep-cli{display:flex;flex-wrap:wrap;gap:4px 22px;margin-bottom:12px;font-size:13px;} .cli-i b{color:#555;}'
+ +'.sep-desp{border:1.5px solid #15161A;border-radius:8px;padding:12px 14px;margin-bottom:14px;}'
+ +'.sep-desp .hd{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#15161A;border-bottom:1px solid #d9d9d9;padding-bottom:6px;margin-bottom:9px;}'
+ +'.sep-desp .grid{display:grid;grid-template-columns:1fr 1fr;gap:9px 22px;}'
+ +'.sep-desp .f{font-size:13px;} .sep-desp .f b{display:block;font-size:9.5px;color:#888;font-weight:700;text-transform:uppercase;letter-spacing:.03em;margin-bottom:1px;}'
+ +'.sep-desp .f .v{font-weight:600;color:#15161A;} .sep-desp .f.full{grid-column:1 / -1;} .sep-desp .f.big .v{font-size:15px;font-weight:800;} .sep-desp .f .miss{color:#c0392b;font-weight:700;}'
  +'table.sep-it{width:100%;border-collapse:collapse;}'
  +'table.sep-it th{background:#15161A;color:#fff;font-size:11px;letter-spacing:.03em;text-transform:uppercase;padding:8px;text-align:left;-webkit-print-color-adjust:exact;print-color-adjust:exact;}'
  +'table.sep-it td{padding:9px 8px;border-bottom:1px solid #d9d9d9;vertical-align:middle;}'
@@ -346,11 +351,19 @@ function buildPicking(data){
   const rows=it.map((x,i)=>{const eff=+x[5]||0,list=(x[6]!=null?+x[6]:eff),q=parseInt(x[3])||0,sub=eff*q,nego=(list&&list!==eff);return '<tr><td class="chk"><span class="box"></span></td><td class="c">'+(i+1)+'</td><td class="ref">'+esc(x[0])+'</td><td>'+esc(x[1])+(x[2]?'<br><span class="det">'+esc(x[2])+'</span>':'')+(x[7]?'<br><span class="nota">🎨 '+esc(x[7])+'</span>':'')+'</td><td class="c cant">'+esc(x[3])+'</td><td class="c tipo">'+esc(x[4])+'</td><td class="r">'+(nego?'<b>'+money.format(eff)+'</b><br><span class="det">Lista: '+money.format(list)+'</span>':money.format(eff))+'</td><td class="r sub">'+money.format(sub)+'</td></tr>';}).join('');
   const totCant=it.reduce((s,x)=>s+(parseInt(x[3])||0),0);
   const totVal=it.reduce((s,x)=>s+((+x[5]||0)*(parseInt(x[3])||0)),0);
-  const row=(l,v)=>v?'<span class="cli-i"><b>'+l+':</b> '+esc(v)+'</span>':'';
+  const fld=(l,v,cls)=>v?'<div class="f '+(cls||'')+'"><b>'+l+'</b><span class="v">'+esc(v)+'</span></div>':'';
+  const fldReq=(l,v,cls)=>'<div class="f '+(cls||'')+'"><b>'+l+'</b>'+(v?'<span class="v">'+esc(v)+'</span>':'<span class="miss">— sin dato —</span>')+'</div>';
   return '<div class="sep-doc">'
    +'<div class="sep-hd"><img src="'+logo+'" alt="BULLOK" crossorigin="anonymous"><div class="sep-r"><div class="sep-title">LISTA DE SEPARACIÓN</div><div class="sep-no">'+esc(data.n||'')+'</div><div class="sep-fch">'+esc(data.f||'')+'</div></div></div>'
    +'<div class="sep-body">'
-   +'<div class="sep-cli">'+row('Cliente',c.nm)+row('Ciudad',c.ci)+row('Vendedor',c.ve)+row('Tel',c.tl)+'</div>'
+   +'<div class="sep-desp"><div class="hd">Datos de despacho / cliente</div><div class="grid">'
+     +fldReq('Nombre / Razón social',c.nm,'big')
+     +fld('NIT / C.C.',c.ni)
+     +fldReq('Celular',c.tl,'big')
+     +fldReq('Ciudad',c.ci,'big')
+     +fldReq('Dirección de entrega',c.di,'full big')
+     +fld('Vendedor',c.ve)
+   +'</div></div>'
    +'<table class="sep-it"><thead><tr><th class="chk">✓</th><th>#</th><th>Ref.</th><th>Producto</th><th class="c">Cant.</th><th class="c">Tipo</th><th class="r">Vlr. unit.</th><th class="r">Subtotal</th></tr></thead><tbody>'+rows
    +'<tr class="sep-tot"><td></td><td></td><td></td><td class="r">TOTALES</td><td class="c">'+totCant+'</td><td class="c">'+it.length+' líneas</td><td class="r">TOTAL</td><td class="r">'+money.format(totVal)+'</td></tr>'
    +'</tbody></table>'
@@ -518,7 +531,7 @@ function saveCust(){try{localStorage.setItem('bullok_cust',JSON.stringify(custDa
 function loadCust(){try{const c=JSON.parse(localStorage.getItem('bullok_cust'))||{};const m={cNombre:c.nombre,cNit:c.nit,cTel:c.tel,cCiudad:c.ciudad,cVendedor:c.vendedor,cDireccion:c.direccion};CUSTF.forEach(id=>{const el=document.getElementById(id);if(el&&m[id])el.value=m[id];});}catch(e){}}
 let custOpen=false;
 function toggleCust(force){const c=document.getElementById('custForm');if(!c)return;custOpen=(typeof force==='boolean'?force:!custOpen);c.classList.toggle('open',custOpen);const h=document.getElementById('custHint');if(h)h.style.display=custOpen?'none':'';}
-function validCust(){if(!custOpen)toggleCust(true);const req=['cNombre','cTel','cCiudad'];let ok=true,first=null;req.forEach(id=>{const el=document.getElementById(id);const bad=!el.value.trim();el.classList.toggle('err',bad);if(bad){ok=false;first=first||el;}});if(first){first.focus();first.scrollIntoView({block:'center',behavior:'smooth'});}return ok;}
+function validCust(){if(!custOpen)toggleCust(true);const req=['cNombre','cTel','cCiudad','cDireccion'];let ok=true,first=null;req.forEach(id=>{const el=document.getElementById(id);const bad=!el.value.trim();el.classList.toggle('err',bad);if(bad){ok=false;first=first||el;}});if(first){first.focus();first.scrollIntoView({block:'center',behavior:'smooth'});}return ok;}
 function orderNo(){const d=new Date(),p=n=>String(n).padStart(2,'0');return 'BLK-'+String(d.getFullYear()).slice(2)+p(d.getMonth()+1)+p(d.getDate())+'-'+p(d.getHours())+p(d.getMinutes());}
 function fechaLarga(){return new Date().toLocaleString('es-CO',{day:'2-digit',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'});}
 function buildMessage(){
