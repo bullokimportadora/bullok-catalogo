@@ -176,6 +176,8 @@ input{font-family:inherit;}
 .site-foot__col--about{flex:1 1 360px;max-width:560px;} .site-foot__col--about p{line-height:1.55;}
 .foot-soc{display:flex;flex-direction:column;gap:3px;} .foot-soc a{display:inline-flex;align-items:center;gap:9px;margin:4px 0;font-size:14px;} .foot-soc svg{flex:0 0 auto;opacity:.8;}
 .site-foot__note{margin-top:14px;font-size:12.5px;color:rgba(255,255,255,.5);}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(22px);background:#15161A;color:#fff;padding:13px 20px;border-radius:11px;font-size:14px;font-weight:600;box-shadow:0 10px 34px rgba(0,0,0,.32);z-index:120;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;max-width:90vw;text-align:center;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .lightbox{position:fixed;inset:0;background:rgba(10,14,22,.9);z-index:80;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;visibility:hidden;transition:opacity .2s;}
 .lightbox.open{opacity:1;visibility:visible;}
 .lb-img{width:min(92vw,92vh);height:min(92vw,92vh);border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);background:#0E0E11;}
@@ -586,7 +588,14 @@ function openLink(url){
   try{location.href=url;return true;}catch(e){}
   return false;
 }
-function sendWhatsApp(){if(!cartEntries().length)return;if(!validCust())return;saveCust();openLink('https://wa.me/'+CONFIG.whatsapp+'?text='+encodeURIComponent(buildMessage()));}
+function toast(msg){let t=document.getElementById('toast');if(!t){t=document.createElement('div');t.id='toast';t.className='toast';document.body.appendChild(t);}t.textContent=msg;requestAnimationFrame(()=>t.classList.add('show'));clearTimeout(window.__tt);window.__tt=setTimeout(()=>t.classList.remove('show'),3600);}
+function resetOrder(){
+  cart={};saveCart();
+  CUSTF.forEach(id=>{if(id==='cVendedor')return;const el=document.getElementById(id);if(el){el.value='';el.classList.remove('err');}});
+  saveCust();
+  updateCart();renderGrid();closeCart();
+}
+function sendWhatsApp(){if(!cartEntries().length)return;if(!validCust())return;saveCust();const ok=openLink('https://wa.me/'+CONFIG.whatsapp+'?text='+encodeURIComponent(buildMessage()));if(ok){resetOrder();toast('✅ Pedido enviado. Carrito y datos limpios para el siguiente cliente.');}}
 function buildOrderHTML(){
   const c=custData(),esc=s=>String(s==null?'':s).replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
   const logo=new URL('brand/logo_wordmark.png',location.href).href;
