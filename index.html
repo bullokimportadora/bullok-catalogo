@@ -55,6 +55,12 @@ input{font-family:inherit;}
 .subchip{flex-shrink:0;border:1px solid var(--line);background:var(--surface);padding:6px 13px;border-radius:999px;font-size:13px;font-weight:600;color:var(--ink-soft);white-space:nowrap;transition:all .15s;}
 .subchip:hover{color:var(--brand);border-color:var(--brand);}
 .subchip.active{background:var(--brand);border-color:var(--brand);color:#06130A;}
+.cats.cue-r:not(.cue-l) .cats__inner,.subcats.cue-r:not(.cue-l) .subcats__inner{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 44px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 44px),transparent);}
+.cats.cue-l:not(.cue-r) .cats__inner,.subcats.cue-l:not(.cue-r) .subcats__inner{-webkit-mask-image:linear-gradient(to right,transparent,#000 44px);mask-image:linear-gradient(to right,transparent,#000 44px);}
+.cats.cue-l.cue-r .cats__inner,.subcats.cue-l.cue-r .subcats__inner{-webkit-mask-image:linear-gradient(to right,transparent,#000 44px,#000 calc(100% - 44px),transparent);mask-image:linear-gradient(to right,transparent,#000 44px,#000 calc(100% - 44px),transparent);}
+.scroll-arrow{position:absolute;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:50%;background:var(--surface);border:1px solid var(--line);align-items:center;justify-content:center;cursor:pointer;z-index:4;box-shadow:0 2px 10px rgba(20,27,46,.2);color:var(--ink);font-size:19px;font-weight:700;display:none;}
+.scroll-arrow.left{left:5px;} .scroll-arrow.right{right:5px;}
+@media(hover:hover) and (pointer:fine){.cats.cue-l .scroll-arrow.left,.cats.cue-r .scroll-arrow.right,.subcats.cue-l .scroll-arrow.left,.subcats.cue-r .scroll-arrow.right{display:flex;}}
 .hero{max-width:var(--maxw);margin:0 auto;padding:28px 20px 8px;}
 .hero h1{font-family:"Chakra Petch",sans-serif;font-weight:700;font-size:clamp(26px,4vw,40px);letter-spacing:.01em;margin:0 0 6px;text-transform:uppercase;}
 .hero p{margin:0;color:var(--ink-soft);font-size:16px;max-width:60ch;}
@@ -387,14 +393,41 @@ function renderCats(){
   box.innerHTML=all.map(c=>'<button class="chip '+(c===filtroL?'active':'')+'" data-l="'+c+'">'+c+'</button>').join('');
   box.querySelectorAll('.chip').forEach(ch=>ch.onclick=()=>{filtroL=ch.dataset.l;filtroS="Todas";renderCats();renderGrid();});
   renderSubs();
+  updateCues();
 }
 function renderSubs(){
   const wrap=document.getElementById('subcats-wrap'),box=document.getElementById('subcats');
-  if(filtroL==="Todos"){wrap.style.display='none';box.innerHTML='';return;}
+  if(filtroL==="Todos"){wrap.style.display='none';box.innerHTML='';updateCues();return;}
   wrap.style.display='';
   const subs=["Todas",...(SUBS[filtroL]||[])];
   box.innerHTML=subs.map(s=>'<button class="subchip '+(s===filtroS?'active':'')+'" data-s="'+s+'">'+s+'</button>').join('');
   box.querySelectorAll('.subchip').forEach(ch=>ch.onclick=()=>{filtroS=ch.dataset.s;renderSubs();renderGrid();});
+  updateCues();
+}
+function updateCues(){
+  [['.cats','cats'],['.subcats','subcats']].forEach(a=>{
+    const nav=document.querySelector(a[0]),inner=document.getElementById(a[1]);
+    if(!nav||!inner)return;
+    const max=inner.scrollWidth-inner.clientWidth-1,sl=inner.scrollLeft;
+    nav.classList.toggle('cue-l',sl>4);
+    nav.classList.toggle('cue-r',max>0&&sl<max);
+  });
+}
+function setupCues(){
+  [['.cats','cats'],['.subcats','subcats']].forEach(a=>{
+    const nav=document.querySelector(a[0]),inner=document.getElementById(a[1]);
+    if(!nav||!inner||nav.querySelector('.scroll-arrow'))return;
+    ['left','right'].forEach(dir=>{
+      const b=document.createElement('button');b.type='button';
+      b.className='scroll-arrow '+dir;
+      b.setAttribute('aria-label',dir==='left'?'Ver anteriores':'Ver más');
+      b.textContent=dir==='left'?'‹':'›';
+      b.addEventListener('click',()=>inner.scrollBy({left:(dir==='left'?-1:1)*Math.max(170,inner.clientWidth*0.7),behavior:'smooth'}));
+      nav.appendChild(b);
+    });
+    inner.addEventListener('scroll',updateCues,{passive:true});
+  });
+  window.addEventListener('resize',updateCues);
 }
 function visible(p){return admin || (p.disponible!==false && p.precio!=null);}
 
@@ -613,6 +646,7 @@ async function downloadData(){
 }
 
 if(!SEP){
+setupCues();
 document.getElementById('welcomeOk').onclick=closeWelcome;
 showWelcome();
 document.getElementById('openCart').onclick=openCart;
