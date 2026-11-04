@@ -310,7 +310,7 @@ function isPaq(p){return p&&p.unidad==='paq';}
 function uSuf(p){return isPaq(p)?'/paq':'c/u';}
 function empTxt(p){return isPaq(p)?(' (paq x '+(p.empaque||12)+')'):'';}
 function bultoTxt(p){if(!p.bulto)return '';return isPaq(p)?(p.bulto+' paq x '+(p.empaque||12)+' und por bulto'):(p.bulto+' und por bulto');}
-let cart=loadCart(),filtroL="Todos",filtroS="Todas",busqueda="",admin=false,impMoved=false;
+let cart=loadCart(),filtroL="Todos",filtroS="Todas",busqueda="",admin=false,impMoved=false,savedL=null,savedS=null;
 let SPG=5,_io=null;
 function cellPos(ci){var c=ci%SPG,r=(ci/SPG)|0;return [SPG>1?c/(SPG-1)*100:0, SPG>1?r/(SPG-1)*100:0];}
 function spriteApply(el,p){if(!p)return;if(p.sh&&p.ci!=null){var q=cellPos(p.ci);el.style.backgroundImage="url('"+p.sh+"')";el.style.backgroundSize=(SPG*100)+"% "+(SPG*100)+"%";el.style.backgroundPosition=q[0]+"% "+q[1]+"%";el.style.backgroundRepeat="no-repeat";}else{el.style.backgroundImage="url(\""+placeholder(p)+"\")";el.style.backgroundSize="cover";el.style.backgroundPosition="center";}}
@@ -432,7 +432,7 @@ function renderCats(){
   const box=document.getElementById('cats');
   const all=["Todos",...LINEAS];
   box.innerHTML=all.map(c=>'<button class="chip '+(c===filtroL?'active':'')+'" data-l="'+c+'">'+c+'</button>').join('');
-  box.querySelectorAll('.chip').forEach(ch=>ch.onclick=()=>{filtroL=ch.dataset.l;filtroS="Todas";renderCats();renderGrid();moveImpToBottom();});
+  box.querySelectorAll('.chip').forEach(ch=>ch.onclick=()=>{savedL=null;savedS=null;filtroL=ch.dataset.l;filtroS="Todas";renderCats();renderGrid();moveImpToBottom();});
   renderSubs();
   updateCues();
 }
@@ -442,7 +442,7 @@ function renderSubs(){
   wrap.style.display='';
   const subs=["Todas",...(SUBS[filtroL]||[])];
   box.innerHTML=subs.map(s=>'<button class="subchip '+(s===filtroS?'active':'')+'" data-s="'+s+'">'+s+'</button>').join('');
-  box.querySelectorAll('.subchip').forEach(ch=>ch.onclick=()=>{filtroS=ch.dataset.s;renderSubs();renderGrid();moveImpToBottom();});
+  box.querySelectorAll('.subchip').forEach(ch=>ch.onclick=()=>{savedL=null;savedS=null;filtroS=ch.dataset.s;renderSubs();renderGrid();moveImpToBottom();});
   updateCues();
 }
 function updateCues(){
@@ -740,7 +740,14 @@ document.getElementById('sendWa').onclick=sendWhatsApp;
 document.getElementById('printOrder').onclick=printOrder;
 CUSTF.forEach(id=>{const el=document.getElementById(id);if(el){el.addEventListener('input',()=>{el.classList.remove('err');saveCust();});}});
 loadCust();
-document.getElementById('search').oninput=e=>{busqueda=e.target.value;renderGrid();moveImpToBottom();};
+document.getElementById('search').oninput=e=>{
+  const had=busqueda.trim()!=='';
+  busqueda=e.target.value;
+  const has=busqueda.trim()!=='';
+  if(has&&!had){ if(filtroL!=='Todos'||filtroS!=='Todas'){savedL=filtroL;savedS=filtroS;filtroL='Todos';filtroS='Todas';renderCats();} }
+  else if(!has&&had&&savedL!==null){ filtroL=savedL;filtroS=savedS;savedL=null;savedS=null;renderCats(); }
+  renderGrid();moveImpToBottom();
+};
 document.getElementById('footWa').onclick=e=>{e.preventDefault();openLink('https://wa.me/'+CONFIG.whatsapp);};
 document.getElementById('impWa').onclick=()=>openLink('https://wa.me/'+CONFIG.whatsapp+'?text='+encodeURIComponent('Hola Bullok, quiero cotizar una importación desde China de:\n\n(describe el producto, la cantidad y adjunta una foto o referencia si tienes)'));
 if(location.hash.toLowerCase().indexOf('editar')>=0)enterAdmin();
