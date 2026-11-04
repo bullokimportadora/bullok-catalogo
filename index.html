@@ -43,13 +43,13 @@ input{font-family:inherit;}
 .cart-btn:hover{background:var(--brand-dark);}
 .cart-btn__count{position:absolute;top:-7px;right:-7px;min-width:20px;height:20px;padding:0 5px;background:var(--amber);color:#fff;font-size:12px;font-weight:700;border-radius:10px;display:flex;align-items:center;justify-content:center;transform:scale(0);transition:transform .2s cubic-bezier(.34,1.56,.64,1);}
 .cart-btn__count.show{transform:scale(1);}
-.cats{position:sticky;top:62px;z-index:30;background:var(--surface);border-bottom:1px solid var(--line);}
+.cats{position:sticky;top:var(--catsTop,62px);z-index:30;background:var(--surface);border-bottom:1px solid var(--line);}
 .cats__inner{padding:12px 20px;display:flex;gap:9px;overflow-x:auto;scrollbar-width:none;}
 .cats__inner::-webkit-scrollbar{display:none;}
 .chip{flex-shrink:0;border:1px solid var(--line);padding:8px 16px;border-radius:999px;font-size:14px;font-weight:600;color:var(--ink-soft);background:var(--surface);transition:all .15s;white-space:nowrap;}
 .chip:hover{border-color:var(--brand);color:var(--brand);}
 .chip.active{background:var(--brand);border-color:var(--brand);color:#06130A;}
-.subcats{position:sticky;top:112px;z-index:29;background:var(--bg);border-bottom:1px solid var(--line);}
+.subcats{position:sticky;top:var(--subTop,112px);z-index:29;background:var(--bg);border-bottom:1px solid var(--line);}
 .subcats__inner{padding:10px 20px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;}
 .subcats__inner::-webkit-scrollbar{display:none;}
 .subchip{flex-shrink:0;border:1px solid var(--line);background:var(--surface);padding:6px 13px;border-radius:999px;font-size:13px;font-weight:600;color:var(--ink-soft);white-space:nowrap;transition:all .15s;}
@@ -201,7 +201,7 @@ input{font-family:inherit;}
 .imp__step b{color:var(--brand);font-size:14.5px;}
 .imp__step span{color:#AEB4BF;font-size:13px;}
 .imp__cta{display:inline-flex;align-items:center;gap:9px;background:var(--brand);color:#06130A;border:0;border-radius:11px;font-family:inherit;font-weight:700;font-size:15.5px;padding:14px 22px;cursor:pointer;}
-@media(max-width:640px){.brand__logo{height:32px;}.cats{top:60px;}.subcats{top:106px;}.grid{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px;}.card__body{padding:11px;gap:8px;}.card__price{font-size:18px;}.add-btn span{display:none;}.imp-link__label{display:none;}.imp h2{font-size:19px;}.imp__inner{padding:18px 16px;}.imp__cta{width:100%;justify-content:center;}}
+@media(max-width:640px){.brand__logo{height:32px;}.header__inner{flex-wrap:wrap;row-gap:11px;}.search{order:5;flex-basis:100%;max-width:none;}.grid{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px;}.card__body{padding:11px;gap:8px;}.card__price{font-size:18px;}.add-btn span{display:none;}.imp-link__label{display:none;}.imp h2{font-size:19px;}.imp__inner{padding:18px 16px;}.imp__cta{width:100%;justify-content:center;}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto;}}
 </style>
 </head>
@@ -211,7 +211,7 @@ input{font-family:inherit;}
     <a href="#" class="brand" aria-label="Bullok inicio">
       <img class="brand__logo" src="brand/logo_wordmark.png" alt="BULLOK — Mercancía de otro planeta">
     </a>
-    <div class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="text" id="search" placeholder="Buscar producto o referencia..." aria-label="Buscar"></div>
+    <div class="search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="text" id="search" placeholder="Buscar producto o referencia..." aria-label="Buscar" autocapitalize="none" autocorrect="off" autocomplete="off" spellcheck="false" enterkeyhint="search" inputmode="search"></div>
     <a href="#importacion" class="imp-link" aria-label="Importamos por ti"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><span class="imp-link__label">Importamos por ti</span></a>
   <button class="cart-btn" id="openCart" aria-label="Ver pedido"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 7h14l-1.2 10.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8L5 7Z"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg><span class="cart-btn__label">Pedido</span><span class="cart-btn__count" id="cartCount">0</span></button>
   </div>
@@ -488,15 +488,24 @@ function watchImpScroll(){
     if(imp&&imp.getBoundingClientRect().bottom<0)moveImpToBottom();
   },{passive:true});
 }
+function setStickyOffsets(){
+  const h=document.querySelector('.header'),c=document.querySelector('.cats');
+  if(!h)return;
+  const hh=Math.round(h.getBoundingClientRect().height);
+  document.documentElement.style.setProperty('--catsTop',hh+'px');
+  const ch=c?Math.round(c.getBoundingClientRect().height):0;
+  document.documentElement.style.setProperty('--subTop',(hh+ch)+'px');
+}
 function visible(p){return admin || (p.disponible!==false && p.precio!=null);}
 
+function norm(s){return String(s==null?'':s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\s+/g,' ').trim();}
 function renderGrid(){
   const grid=document.getElementById('grid');
-  const q=busqueda.toLowerCase().trim();
+  const q=norm(busqueda);
   const list=PRODUCTOS.filter(p=>{
     const okL=filtroL==="Todos"||p.linea===filtroL;
     const okS=filtroS==="Todas"||p.sub===filtroS;
-    const okQ=!q||(p.nombre||'').toLowerCase().includes(q)||(p.ref||'').toLowerCase().includes(q)||p.linea.toLowerCase().includes(q)||(p.sub||'').toLowerCase().includes(q);
+    const okQ=!q||norm(p.nombre).includes(q)||norm(p.ref).includes(q)||norm(p.linea).includes(q)||norm(p.sub).includes(q);
     return okL&&okS&&okQ&&visible(p);
   });
   document.getElementById('catTitle').textContent=filtroL==="Todos"?"Todos los productos":(filtroS==="Todas"?filtroL:filtroS);
@@ -718,6 +727,7 @@ async function downloadData(){
 if(!SEP){
 setupCues();
 watchImpScroll();
+setStickyOffsets();window.addEventListener('resize',setStickyOffsets);setTimeout(setStickyOffsets,400);
 document.getElementById('welcomeOk').onclick=closeWelcome;
 showWelcome();
 document.getElementById('openVideo').onclick=openVideo;
