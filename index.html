@@ -512,6 +512,7 @@ function cardView(p){
     '<div class="card__body"><h3 class="card__name">'+(p.nombre||p.ref)+'</h3>'+
     (p.ref?'<p class="card__meta">Ref. '+p.ref+(p.detalle?' — '+p.detalle:'')+'</p>':'')+
     '<div class="card__price">'+money.format(p.precio)+' <small>'+uSuf(p)+'</small></div>'+
+    (p.colores_agotados?'<p style="margin:3px 0 6px;font-size:12px;font-weight:700;color:#c0392b;background:rgba(192,57,43,.08);border:1px solid rgba(192,57,43,.25);border-radius:7px;padding:6px 9px">⚠️ Agotados por ahora: '+String(p.colores_agotados).replace(/</g,"&lt;")+'</p>':'')+
     '<input id="nota-'+p.id+'" class="card__nota" type="text" placeholder="🎨 Color / motivo: ej. 20 rojas, 10 azules" oninput="notaSum('+p.id+')">'+
     '<div class="card__actions"><div class="stepper"><button onclick="stepCard('+p.id+',-1)">−</button><input type="number" id="qty-'+p.id+'" value="1" min="1"></button><button onclick="stepCard('+p.id+',1)">+</button></div>'+
     '<button class="add-btn" id="add-'+p.id+'" onclick="addToCart('+p.id+')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg><span>Agregar</span></button></div>'+
@@ -528,6 +529,7 @@ function cardEdit(p){
     '<p class="card__meta">Ref. '+p.ref+'</p>'+
     '<div class="edit-row"><label>Precio (c/u)</label><input class="edit-input" type="number" value="'+(p.precio!=null?p.precio:'')+'" placeholder="Escribe el precio" onchange="editField('+p.id+',\'precio\',this.value)"></div>'+
     '<div class="edit-row"><label>Cantidad (und)</label><input class="edit-input" type="number" value="'+(p.cantidad!=null?p.cantidad:'')+'" placeholder="Existencia disponible" onchange="editField('+p.id+',\'cantidad\',this.value)"></div>'+
+    '<div class="edit-row"><label>Colores agotados</label><input class="edit-input" value="'+(p.colores_agotados||'').replace(/"/g,'&quot;')+'" placeholder="ej. rojo, verde (vacío si todos hay)" onchange="editField('+p.id+',\'colores_agotados\',this.value)"></div>'+
     '<label class="edit-check"><input type="checkbox" '+(p.disponible!==false?'checked':'')+' onchange="editField('+p.id+',\'disponible\',this.checked)"> Disponible (visible para clientes)</label>'+
     '</div></article>';
 }
@@ -702,7 +704,7 @@ function enterAdmin(){
 function exitAdmin(){admin=false;document.getElementById('adminbar').classList.remove('on');document.body.style.paddingBottom='0';renderGrid();}
 async function downloadData(){
   const out={lineas:LINEAS,subs:SUBS,carpetas:CARPETAS,sub_colors:SUB_COLORS,sprite:(DATA&&DATA.sprite)||{grid:SPG},
-    productos:PRODUCTOS.map(p=>({ref:p.ref,nombre:p.nombre,linea:p.linea,sub:p.sub,precio:p.precio,bulto:p.bulto,detalle:p.detalle,archivo:p.archivo,disponible:p.disponible!==false,sh:p.sh,ci:p.ci,cantidad:(p.cantidad!=null?p.cantidad:null),unidad:p.unidad,empaque:p.empaque}))};
+    productos:PRODUCTOS.map(p=>({ref:p.ref,nombre:p.nombre,linea:p.linea,sub:p.sub,precio:p.precio,bulto:p.bulto,detalle:p.detalle,archivo:p.archivo,disponible:p.disponible!==false,sh:p.sh,ci:p.ci,cantidad:(p.cantidad!=null?p.cantidad:null),unidad:p.unidad,empaque:p.empaque,colores_agotados:(p.colores_agotados||null)}))};
   const txt=JSON.stringify(out,null,1);
   try{
     const dl=await claude.use('downloads');
