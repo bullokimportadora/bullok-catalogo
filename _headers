@@ -1,0 +1,15 @@
+# La página y los datos siempre frescos (se revalidan en cada carga)
+/
+  Cache-Control: no-cache, must-revalidate
+/index.html
+  Cache-Control: no-cache, must-revalidate
+/productos.json
+  Cache-Control: no-cache, must-revalidate
+
+# Recursos pesados sí en caché (cambian poco y así carga rápido)
+/sp/*
+  Cache-Control: public, max-age=604800
+/brand/*
+  Cache-Control: public, max-age=604800
+/tutorial.mp4
+  Cache-Control: public, max-age=604800
