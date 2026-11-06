@@ -10000,7 +10000,8 @@
    "archivo": null,
    "disponible": true,
    "sh": "sp/CONT9_0.jpg",
-   "ci": 0
+   "ci": 0,
+   "preventa": true
   },
   {
    "ref": "179-7",
@@ -10042,7 +10043,8 @@
    "archivo": null,
    "disponible": true,
    "sh": "sp/CONT9_0.jpg",
-   "ci": 3
+   "ci": 3,
+   "preventa": true
   },
   {
    "ref": "BLK-344",
@@ -10056,7 +10058,8 @@
    "archivo": null,
    "disponible": true,
    "sh": "sp/CONT9_0.jpg",
-   "ci": 4
+   "ci": 4,
+   "preventa": true
   },
   {
    "ref": "BLK-BL3",
@@ -10070,7 +10073,8 @@
    "archivo": null,
    "disponible": true,
    "sh": "sp/CONT9_0.jpg",
-   "ci": 5
+   "ci": 5,
+   "preventa": true
   },
   {
    "ref": "BLK-gl11",
@@ -10084,7 +10088,8 @@
    "archivo": null,
    "disponible": true,
    "sh": "sp/CONT9_0.jpg",
-   "ci": 6
+   "ci": 6,
+   "preventa": true
   },
   {
    "ref": "BLK-gl12",
@@ -10098,7 +10103,8 @@
    "archivo": null,
    "disponible": true,
    "sh": "sp/CONT9_0.jpg",
-   "ci": 7
+   "ci": 7,
+   "preventa": true
   },
   {
    "ref": "BLK-gl13",
@@ -10112,7 +10118,8 @@
    "archivo": null,
    "disponible": true,
    "sh": "sp/CONT9_0.jpg",
-   "ci": 8
+   "ci": 8,
+   "preventa": true
   },
   {
    "ref": "BLK-gl14",
@@ -10126,7 +10133,8 @@
    "archivo": null,
    "disponible": true,
    "sh": "sp/CONT9_0.jpg",
-   "ci": 9
+   "ci": 9,
+   "preventa": true
   },
   {
    "ref": "BLK-gl15",
@@ -10140,7 +10148,8 @@
    "archivo": null,
    "disponible": true,
    "sh": "sp/CONT9_0.jpg",
-   "ci": 10
+   "ci": 10,
+   "preventa": true
   },
   {
    "ref": "BLK-J14",
@@ -10168,7 +10177,8 @@
    "archivo": null,
    "disponible": true,
    "sh": "sp/CONT9_0.jpg",
-   "ci": 12
+   "ci": 12,
+   "preventa": true
   },
   {
    "ref": "BLK-J16",
