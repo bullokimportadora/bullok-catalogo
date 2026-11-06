@@ -382,7 +382,17 @@ function sepStyles(){return '*{box-sizing:border-box;margin:0;padding:0;}'
  +'tr.sep-tot td{border-top:2px solid #15161A;font-weight:800;font-size:14px;padding-top:10px;}'
  +'.sep-sign{display:flex;gap:40px;margin-top:40px;} .sep-sign div{flex:1;border-top:1px solid #999;padding-top:5px;color:#555;font-size:11px;text-align:center;}'
  +'.sep-ft{margin-top:22px;color:#888;font-size:10px;text-align:center;border-top:1px solid #eee;padding-top:8px;}'
- +'@media print{.sep-bar{display:none!important;}body{background:#fff;}.sep-wrap{box-shadow:none;margin:0;max-width:none;}@page{margin:12mm;}}';}
+ +'@media print{'
+ +'.sep-bar{display:none!important;}body{background:#fff;}'
+ +'.sep-wrap{box-shadow:none;margin:0;max-width:none;}'
+ +'.sep-hd{background:#fff!important;border-bottom:2px solid #000!important;}'
+ +'.sep-hd img{filter:brightness(0);}'
+ +'.sep-title,.sep-no,.sep-fch,.sep-r{color:#000!important;}'
+ +'table.sep-it th{background:#fff!important;color:#000!important;border-bottom:2px solid #000!important;}'
+ +'.sep-it .nota{color:#000!important;} .sep-it .det{color:#333!important;} .sep-desp .f .miss{color:#000!important;}'
+ +'tr.sep-tot td{border-top:2px solid #000!important;}'
+ +'@page{margin:12mm;}'
+ +'}';}
 function buildPicking(data){
   const c=data.c||{},esc=s=>String(s==null?'':s).replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
   const logo=new URL('brand/logo_wordmark.png',location.href).href;
