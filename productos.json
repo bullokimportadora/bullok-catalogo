@@ -209,7 +209,8 @@
    "archivo": "TS-738.jpg",
    "disponible": true,
    "sh": "sp/BASCULAS_0.jpg",
-   "ci": 0
+   "ci": 0,
+   "preventa": true
   },
   {
    "ref": "DWS-218",
@@ -3577,7 +3578,8 @@
    "archivo": "K905CTDM.jpg",
    "disponible": true,
    "sh": "sp/PATINES_0.jpg",
-   "ci": 2
+   "ci": 2,
+   "preventa": true
   },
   {
    "ref": "K905CTDL",
@@ -3590,7 +3592,8 @@
    "archivo": "K905CTDL.jpg",
    "disponible": true,
    "sh": "sp/PATINES_0.jpg",
-   "ci": 3
+   "ci": 3,
+   "preventa": true
   },
   {
    "ref": "K905CTDS",
@@ -3733,7 +3736,8 @@
    "archivo": "SF-400.jpg",
    "disponible": true,
    "sh": "sp/BASCULAS_0.jpg",
-   "ci": 24
+   "ci": 24,
+   "preventa": true
   },
   {
    "ref": "BLK-J5",
@@ -3759,7 +3763,8 @@
    "archivo": "BLK-J4.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_5.jpg",
-   "ci": 24
+   "ci": 24,
+   "preventa": true
   },
   {
    "ref": "BLK-J3",
@@ -3772,7 +3777,8 @@
    "archivo": "BLK-J3.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 0
+   "ci": 0,
+   "preventa": true
   },
   {
    "ref": "BLK-J2",
@@ -3785,7 +3791,8 @@
    "archivo": "BLK-J2.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 1
+   "ci": 1,
+   "preventa": true
   },
   {
    "ref": "BLK-J1",
@@ -3798,7 +3805,8 @@
    "archivo": "BLK-J1.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 2
+   "ci": 2,
+   "preventa": true
   },
   {
    "ref": "BLK-J12",
@@ -3811,7 +3819,8 @@
    "archivo": "BLK-J12.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 3
+   "ci": 3,
+   "preventa": true
   },
   {
    "ref": "BLK-J11",
@@ -3824,7 +3833,8 @@
    "archivo": "BLK-J11.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 4
+   "ci": 4,
+   "preventa": true
   },
   {
    "ref": "BLK-J10",
@@ -3837,7 +3847,8 @@
    "archivo": "BLK-J10.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 5
+   "ci": 5,
+   "preventa": true
   },
   {
    "ref": "BLK-J9",
@@ -3850,7 +3861,8 @@
    "archivo": "BLK-J9.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 6
+   "ci": 6,
+   "preventa": true
   },
   {
    "ref": "BLK-467",
@@ -3889,7 +3901,8 @@
    "archivo": "BLK-J13.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 9
+   "ci": 9,
+   "preventa": true
   },
   {
    "ref": "BLK-J13-1",
@@ -3902,7 +3915,8 @@
    "archivo": "BLK-J13-1.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 10
+   "ci": 10,
+   "preventa": true
   },
   {
    "ref": "BLK-J13-2",
@@ -3915,7 +3929,8 @@
    "archivo": "BLK-J13-2.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 11
+   "ci": 11,
+   "preventa": true
   },
   {
    "ref": "BLK-J13-3",
@@ -3928,7 +3943,8 @@
    "archivo": "BLK-J13-3.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 12
+   "ci": 12,
+   "preventa": true
   },
   {
    "ref": "FD1351-1",
@@ -3941,7 +3957,8 @@
    "archivo": "FD1351-1.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 13
+   "ci": 13,
+   "preventa": true
   },
   {
    "ref": "BLK-J7",
@@ -3980,7 +3997,8 @@
    "archivo": "BLK-BL1.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 16
+   "ci": 16,
+   "preventa": true
   },
   {
    "ref": "BLK-BL2",
@@ -3993,7 +4011,8 @@
    "archivo": "BLK-BL2.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 17
+   "ci": 17,
+   "preventa": true
   },
   {
    "ref": "BLK-BL4",
@@ -4006,7 +4025,8 @@
    "archivo": "BLK-BL4.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 18
+   "ci": 18,
+   "preventa": true
   },
   {
    "ref": "BLK-BL5",
@@ -4019,7 +4039,8 @@
    "archivo": "BLK-BL5.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 19
+   "ci": 19,
+   "preventa": true
   },
   {
    "ref": "BLK-BL6",
@@ -4032,7 +4053,8 @@
    "archivo": "BLK-BL6.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 20
+   "ci": 20,
+   "preventa": true
   },
   {
    "ref": "BLK-BU1",
@@ -4045,7 +4067,8 @@
    "archivo": "BLK-BU1.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 21
+   "ci": 21,
+   "preventa": true
   },
   {
    "ref": "BLK-BU2",
@@ -4058,7 +4081,8 @@
    "archivo": "BLK-BU2.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 22
+   "ci": 22,
+   "preventa": true
   },
   {
    "ref": "BLK-BU3",
@@ -4071,7 +4095,8 @@
    "archivo": "BLK-BU3.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 23
+   "ci": 23,
+   "preventa": true
   },
   {
    "ref": "BLK-BU4",
@@ -4084,7 +4109,8 @@
    "archivo": "BLK-BU4.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 24
+   "ci": 24,
+   "preventa": true
   },
   {
    "ref": "BLK-BU5",
@@ -4097,7 +4123,8 @@
    "archivo": "BLK-BU5.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_7.jpg",
-   "ci": 0
+   "ci": 0,
+   "preventa": true
   },
   {
    "ref": "BLK-BU6",
@@ -4110,7 +4137,8 @@
    "archivo": "BLK-BU6.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_7.jpg",
-   "ci": 1
+   "ci": 1,
+   "preventa": true
   },
   {
    "ref": "BLK-BU7",
@@ -4123,7 +4151,8 @@
    "archivo": "BLK-BU7.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_7.jpg",
-   "ci": 2
+   "ci": 2,
+   "preventa": true
   },
   {
    "ref": "BLK-BU8",
@@ -4136,7 +4165,8 @@
    "archivo": "BLK-BU8.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_7.jpg",
-   "ci": 3
+   "ci": 3,
+   "preventa": true
   },
   {
    "ref": "BLK-BU9",
@@ -4149,7 +4179,8 @@
    "archivo": "BLK-BU9.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_7.jpg",
-   "ci": 4
+   "ci": 4,
+   "preventa": true
   },
   {
    "ref": "BLK-BU10",
@@ -4162,7 +4193,8 @@
    "archivo": "BLK-BU10.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_7.jpg",
-   "ci": 5
+   "ci": 5,
+   "preventa": true
   },
   {
    "ref": "MSC-2",
@@ -8318,7 +8350,8 @@
    "archivo": "BLK-039.jpg",
    "disponible": true,
    "sh": "sp/PINATERIA_0.jpg",
-   "ci": 0
+   "ci": 0,
+   "preventa": true
   },
   {
    "ref": "BLK-043",
@@ -8617,7 +8650,8 @@
    "archivo": "BLK-GL7.jpg",
    "disponible": true,
    "sh": "sp/PINATERIA_0.jpg",
-   "ci": 23
+   "ci": 23,
+   "preventa": true
   },
   {
    "ref": "BLK-GL9",
@@ -8696,7 +8730,8 @@
    "archivo": "BLK-038.jpg",
    "disponible": true,
    "sh": "sp/PINATERIA_1.jpg",
-   "ci": 4
+   "ci": 4,
+   "preventa": true
   },
   {
    "ref": "JR1046-3",
@@ -8970,7 +9005,8 @@
    "archivo": "BLK-337.jpg",
    "disponible": true,
    "sh": "sp/PINATERIA_2.jpg",
-   "ci": 0
+   "ci": 0,
+   "preventa": true
   },
   {
    "ref": "COR21-3",
@@ -9009,7 +9045,8 @@
    "archivo": "BLK-335.jpg",
    "disponible": true,
    "sh": "sp/PINATERIA_2.jpg",
-   "ci": 3
+   "ci": 3,
+   "preventa": true
   },
   {
    "ref": "BLK-336",
@@ -9673,7 +9710,8 @@
    "archivo": "1444-1.jpg",
    "disponible": true,
    "sh": "sp/PINATERIA_4.jpg",
-   "ci": 4
+   "ci": 4,
+   "preventa": true
   },
   {
    "ref": "1444-3",
