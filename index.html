@@ -50,6 +50,14 @@ input{font-family:inherit;}
 .chip{flex-shrink:0;border:1px solid var(--line);padding:8px 16px;border-radius:999px;font-size:14px;font-weight:600;color:var(--ink-soft);background:var(--surface);transition:all .15s;white-space:nowrap;}
 .chip:hover{border-color:var(--brand);color:var(--brand);}
 .chip.active{background:var(--brand);border-color:var(--brand);color:#06130A;}
+.chip--preventa{border-color:#ff6a00;color:#ff8a3d;background:rgba(255,106,0,.1);font-weight:800;}
+.chip--preventa:hover{border-color:#ff6a00;color:#ff8a3d;}
+.chip--preventa.active{background:#ff6a00;border-color:#ff6a00;color:#fff;}
+.card__new{position:absolute;top:10px;right:10px;background:#ff6a00;color:#fff;font-size:11px;font-weight:800;letter-spacing:.02em;padding:4px 9px;border-radius:7px;box-shadow:0 2px 8px rgba(255,106,0,.4);}
+.preventa-aviso{display:flex;gap:11px;align-items:flex-start;background:rgba(255,106,0,.09);border:1px solid rgba(255,106,0,.4);border-radius:12px;padding:13px 16px;margin-bottom:18px;}
+.preventa-aviso .ic{font-size:22px;line-height:1;flex:0 0 auto;}
+.preventa-aviso b{display:block;color:var(--ink);font-size:15px;margin-bottom:2px;}
+.preventa-aviso p{margin:0;color:var(--ink-soft);font-size:13.5px;line-height:1.4;}
 .subcats{position:sticky;top:var(--subTop,112px);z-index:29;background:var(--bg);border-bottom:1px solid var(--line);}
 .subcats__inner{padding:10px 20px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;}
 .subcats__inner::-webkit-scrollbar{display:none;}
@@ -63,7 +71,7 @@ input{font-family:inherit;}
 .scroll-arrow.left{left:5px;} .scroll-arrow.right{right:5px;}
 @media(hover:hover) and (pointer:fine){.cats.cue-l .scroll-arrow.left,.cats.cue-r .scroll-arrow.right,.subcats.cue-l .scroll-arrow.left,.subcats.cue-r .scroll-arrow.right{display:flex;}}
 .hero{max-width:var(--maxw);margin:0 auto;padding:28px 20px 8px;}
-body.searching .hero,body.searching .imp{display:none!important;}
+body.searching .hero,body.searching .imp,body.preventa-view .hero,body.preventa-view .imp{display:none!important;}
 .hero h1{font-family:"Chakra Petch",sans-serif;font-weight:700;font-size:clamp(26px,4vw,40px);letter-spacing:.01em;margin:0 0 6px;text-transform:uppercase;}
 .hero p{margin:0;color:var(--ink-soft);font-size:16px;max-width:60ch;}
 .hero__only{margin:12px 0 0!important;display:inline-flex;align-items:center;gap:8px;background:rgba(99,255,1,.12);border:1px solid var(--brand);color:var(--ink)!important;font-weight:700;font-size:14px!important;padding:9px 14px;border-radius:10px;max-width:none!important;}
@@ -254,7 +262,7 @@ body.searching .hero,body.searching .imp{display:none!important;}
     <button class="imp__cta" id="impWa"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.06 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.29.17-1.42-.07-.13-.27-.2-.57-.35Z"/><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.4A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.18-1.14l-.3-.18-2.85.83.85-2.77-.2-.31A8.2 8.2 0 1 1 12 20.2Z"/></svg> Cotiza tu importación por WhatsApp</button>
   </div>
 </section>
-<main class="grid-wrap"><div class="grid-head"><h2 id="catTitle">Todos los productos</h2><span id="catCount"></span></div><div class="grid" id="grid"></div></main>
+<main class="grid-wrap"><div class="preventa-aviso" id="preventaAviso" hidden><span class="ic">🚢</span><div><b>Mercancía en camino — Preventa abierta</b><p>Estos productos vienen en nuestro próximo contenedor. Haz tu pedido ahora y te lo despachamos apenas llegue.</p></div></div><div class="grid-head"><h2 id="catTitle">Todos los productos</h2><span id="catCount"></span></div><div class="grid" id="grid"></div></main>
 <footer class="site-foot"><div class="site-foot__inner">
   <div class="site-foot__col site-foot__col--about">
     <h3>Quiénes somos</h3>
@@ -10809,17 +10817,22 @@ function imgSrc(p){
 }
 function imgFallback(el,p){el.onerror=null;el.src=placeholder(p);}
 
+const PREVENTA="__PREVENTA__";
+function hasPreventa(){return PRODUCTOS.some(p=>p.preventa===true&&visible(p));}
 function renderCats(){
   const box=document.getElementById('cats');
   const all=["Todos",...LINEAS];
-  box.innerHTML=all.map(c=>'<button class="chip '+(c===filtroL?'active':'')+'" data-l="'+c+'">'+c+'</button>').join('');
+  let html='';
+  if(hasPreventa())html+='<button class="chip chip--preventa '+(filtroL===PREVENTA?'active':'')+'" data-l="'+PREVENTA+'">🔥 Preventa</button>';
+  html+=all.map(c=>'<button class="chip '+(c===filtroL?'active':'')+'" data-l="'+c+'">'+c+'</button>').join('');
+  box.innerHTML=html;
   box.querySelectorAll('.chip').forEach(ch=>ch.onclick=()=>{savedL=null;savedS=null;filtroL=ch.dataset.l;filtroS="Todas";renderCats();renderGrid();moveImpToBottom();});
   renderSubs();
   updateCues();
 }
 function renderSubs(){
   const wrap=document.getElementById('subcats-wrap'),box=document.getElementById('subcats');
-  if(filtroL==="Todos"){wrap.style.display='none';box.innerHTML='';updateCues();return;}
+  if(filtroL==="Todos"||filtroL===PREVENTA){wrap.style.display='none';box.innerHTML='';updateCues();return;}
   wrap.style.display='';
   const subs=["Todas",...(SUBS[filtroL]||[])];
   box.innerHTML=subs.map(s=>'<button class="subchip '+(s===filtroS?'active':'')+'" data-s="'+s+'">'+s+'</button>').join('');
@@ -10883,13 +10896,16 @@ function norm(s){return String(s==null?'':s).toLowerCase().normalize('NFD').repl
 function renderGrid(){
   const grid=document.getElementById('grid');
   const q=norm(busqueda);
+  const pv=filtroL===PREVENTA;
   const list=PRODUCTOS.filter(p=>{
-    const okL=filtroL==="Todos"||p.linea===filtroL;
-    const okS=filtroS==="Todas"||p.sub===filtroS;
+    const okL=pv?(p.preventa===true):(filtroL==="Todos"||p.linea===filtroL);
+    const okS=pv||filtroS==="Todas"||p.sub===filtroS;
     const okQ=!q||norm(p.nombre).includes(q)||norm(p.ref).includes(q)||norm(p.linea).includes(q)||norm(p.sub).includes(q);
     return okL&&okS&&okQ&&visible(p);
   });
-  document.getElementById('catTitle').textContent=filtroL==="Todos"?"Todos los productos":(filtroS==="Todas"?filtroL:filtroS);
+  document.body.classList.toggle('preventa-view',pv&&!q.trim());
+  const av=document.getElementById('preventaAviso');if(av)av.hidden=!(pv&&!q.trim());
+  document.getElementById('catTitle').textContent=pv?"🔥 Preventa — Mercancía nueva":(filtroL==="Todos"?"Todos los productos":(filtroS==="Todas"?filtroL:filtroS));
   document.getElementById('catCount').textContent=list.length+" producto"+(list.length!==1?"s":"");
   if(!list.length){grid.innerHTML='<div class="empty-grid"><strong>Sin resultados</strong>Prueba con otra categoría o cambia la búsqueda.</div>';return;}
   grid.innerHTML=list.map(p=>admin?cardEdit(p):cardView(p)).join('');
@@ -10898,7 +10914,7 @@ function renderGrid(){
 
 function cardView(p){
   return '<article class="card">'+
-    '<div class="card__media" data-i="'+p.id+'" onclick="openLightbox('+p.id+')"><span class="card__tag">'+p.sub+'</span></div>'+
+    '<div class="card__media" data-i="'+p.id+'" onclick="openLightbox('+p.id+')"><span class="card__tag">'+p.sub+'</span>'+(p.preventa===true?'<span class="card__new">🆕 Nuevo</span>':'')+'</div>'+
     '<div class="card__body"><h3 class="card__name">'+(p.nombre||p.ref)+'</h3>'+
     (p.ref?'<p class="card__meta">Ref. '+p.ref+(p.detalle?' — '+p.detalle:'')+'</p>':'')+
     '<div class="card__price">'+money.format(p.precio)+' <small>'+uSuf(p)+'</small></div>'+
@@ -10913,7 +10929,7 @@ function cardView(p){
 function cardEdit(p){
   const pend=(p.precio==null);
   return '<article class="card edit">'+
-    '<div class="card__media" data-i="'+p.id+'" onclick="openLightbox('+p.id+')"><span class="card__tag">'+p.sub+'</span>'+(pend?'<span class="badge-pend">Falta precio</span>':'')+'</div>'+
+    '<div class="card__media" data-i="'+p.id+'" onclick="openLightbox('+p.id+')"><span class="card__tag">'+p.sub+'</span>'+(p.preventa===true?'<span class="card__new">🆕 Nuevo</span>':'')+(pend?'<span class="badge-pend">Falta precio</span>':'')+'</div>'+
     '<div class="card__body">'+
     '<div class="edit-row"><label>Nombre</label><input class="edit-input" value="'+(p.nombre||'').replace(/"/g,'&quot;')+'" onchange="editField('+p.id+',\'nombre\',this.value)"></div>'+
     '<p class="card__meta">Ref. '+p.ref+'</p>'+
@@ -10921,12 +10937,14 @@ function cardEdit(p){
     '<div class="edit-row"><label>Cantidad (und)</label><input class="edit-input" type="number" value="'+(p.cantidad!=null?p.cantidad:'')+'" placeholder="Existencia disponible" onchange="editField('+p.id+',\'cantidad\',this.value)"></div>'+
     '<div class="edit-row"><label>Nota color / disponibilidad</label><input class="edit-input" value="'+(p.colores_agotados||'').replace(/"/g,'&quot;')+'" placeholder="ej. Agotado azul · Solo hay plata (vacío si todo hay)" onchange="editField('+p.id+',\'colores_agotados\',this.value)"></div>'+
     '<label class="edit-check"><input type="checkbox" '+(p.disponible!==false?'checked':'')+' onchange="editField('+p.id+',\'disponible\',this.checked)"> Disponible (visible para clientes)</label>'+
+    '<label class="edit-check"><input type="checkbox" '+(p.preventa===true?'checked':'')+' onchange="editField('+p.id+',\'preventa\',this.checked)"> 🔥 Preventa (contenedor nuevo)</label>'+
     '</div></article>';
 }
 function editField(id,field,val){
   const p=PRODUCTOS[id];
   if(field==='precio'||field==='cantidad'){val=val===''?null:parseInt(val,10);if(isNaN(val))val=null;}
   p[field]=val;saveOverride(p.ref,{[field]:val});
+  if(field==='preventa'){renderCats();renderGrid();}
   updatePendCount();
 }
 function updatePendCount(){
@@ -11094,7 +11112,7 @@ function enterAdmin(){
 function exitAdmin(){admin=false;document.getElementById('adminbar').classList.remove('on');document.body.style.paddingBottom='0';renderGrid();}
 async function downloadData(){
   const out={lineas:LINEAS,subs:SUBS,carpetas:CARPETAS,sub_colors:SUB_COLORS,sprite:(DATA&&DATA.sprite)||{grid:SPG},
-    productos:PRODUCTOS.map(p=>({ref:p.ref,nombre:p.nombre,linea:p.linea,sub:p.sub,precio:p.precio,bulto:p.bulto,detalle:p.detalle,archivo:p.archivo,disponible:p.disponible!==false,sh:p.sh,ci:p.ci,cantidad:(p.cantidad!=null?p.cantidad:null),unidad:p.unidad,empaque:p.empaque,colores_agotados:(p.colores_agotados||null)}))};
+    productos:PRODUCTOS.map(p=>({ref:p.ref,nombre:p.nombre,linea:p.linea,sub:p.sub,precio:p.precio,bulto:p.bulto,detalle:p.detalle,archivo:p.archivo,disponible:p.disponible!==false,sh:p.sh,ci:p.ci,cantidad:(p.cantidad!=null?p.cantidad:null),unidad:p.unidad,empaque:p.empaque,colores_agotados:(p.colores_agotados||null),preventa:(p.preventa===true?true:undefined)}))};
   const txt=JSON.stringify(out,null,1);
   try{
     const dl=await claude.use('downloads');
