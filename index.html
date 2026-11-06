@@ -71,7 +71,7 @@ input{font-family:inherit;}
 .scroll-arrow.left{left:5px;} .scroll-arrow.right{right:5px;}
 @media(hover:hover) and (pointer:fine){.cats.cue-l .scroll-arrow.left,.cats.cue-r .scroll-arrow.right,.subcats.cue-l .scroll-arrow.left,.subcats.cue-r .scroll-arrow.right{display:flex;}}
 .hero{max-width:var(--maxw);margin:0 auto;padding:28px 20px 8px;}
-body.searching .hero,body.searching .imp,body.preventa-view .hero,body.preventa-view .imp{display:none!important;}
+body.searching .hero,body.searching .imp,body.searching .preventa-aviso,body.preventa-view .hero,body.preventa-view .imp{display:none!important;}
 .hero h1{font-family:"Chakra Petch",sans-serif;font-weight:700;font-size:clamp(26px,4vw,40px);letter-spacing:.01em;margin:0 0 6px;text-transform:uppercase;}
 .hero p{margin:0;color:var(--ink-soft);font-size:16px;max-width:60ch;}
 .hero__only{margin:12px 0 0!important;display:inline-flex;align-items:center;gap:8px;background:rgba(99,255,1,.12);border:1px solid var(--brand);color:var(--ink)!important;font-weight:700;font-size:14px!important;padding:9px 14px;border-radius:10px;max-width:none!important;}
@@ -11149,11 +11149,15 @@ document.getElementById('sendWa').onclick=sendWhatsApp;
 document.getElementById('printOrder').onclick=printOrder;
 CUSTF.forEach(id=>{const el=document.getElementById(id);if(el){el.addEventListener('input',()=>{el.classList.remove('err');saveCust();});}});
 loadCust();
-document.getElementById('search').oninput=e=>{
+const _searchEl=document.getElementById('search');
+function syncSearchMode(){document.body.classList.toggle('searching',document.activeElement===_searchEl||busqueda.trim()!=='');}
+_searchEl.addEventListener('focus',syncSearchMode);
+_searchEl.addEventListener('blur',syncSearchMode);
+_searchEl.oninput=e=>{
   const had=busqueda.trim()!=='';
   busqueda=e.target.value;
   const has=busqueda.trim()!=='';
-  document.body.classList.toggle('searching',has);
+  syncSearchMode();
   if(has&&!had){ if(filtroL!=='Todos'||filtroS!=='Todas'){savedL=filtroL;savedS=filtroS;filtroL='Todos';filtroS='Todas';renderCats();} }
   else if(!has&&had&&savedL!==null){ filtroL=savedL;filtroS=savedS;savedL=null;savedS=null;renderCats(); }
   renderGrid();moveImpToBottom();
