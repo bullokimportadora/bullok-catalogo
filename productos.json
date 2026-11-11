@@ -8351,7 +8351,8 @@
    "disponible": true,
    "sh": "sp/PINATERIA_0.jpg",
    "ci": 0,
-   "preventa": true
+   "preventa": true,
+   "colores_agotados": "Dorado y plateado agotados. Solo quedan negro y oro rosa."
   },
   {
    "ref": "BLK-043",
