@@ -2380,7 +2380,7 @@
    "bulto": "100",
    "detalle": "Talla #5",
    "archivo": "BLK-421.jpg",
-   "disponible": true,
+   "disponible": false,
    "sh": "sp/JUGUETERIA_4.jpg",
    "ci": 12
   },
