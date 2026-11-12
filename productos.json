@@ -8966,7 +8966,7 @@
    "bulto": "100",
    "detalle": "30 cm",
    "archivo": "LP1-30.jpg",
-   "disponible": true,
+   "disponible": false,
    "sh": "sp/PINATERIA_1-v3.jpg",
    "ci": 22
   },
