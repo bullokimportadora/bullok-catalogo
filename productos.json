@@ -8732,7 +8732,8 @@
    "disponible": true,
    "sh": "sp/PINATERIA_1.jpg",
    "ci": 4,
-   "preventa": true
+   "preventa": true,
+   "colores_agotados": "Solo quedan oro rosa, plata y negra."
   },
   {
    "ref": "JR1046-3",
