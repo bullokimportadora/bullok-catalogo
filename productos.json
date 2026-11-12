@@ -8349,10 +8349,10 @@
    "detalle": "30 cm x 2 m",
    "archivo": "BLK-039.jpg",
    "disponible": true,
-   "sh": "sp/PINATERIA_0.jpg",
+   "sh": "sp/PINATERIA_0-v2.jpg",
    "ci": 0,
    "preventa": true,
-   "colores_agotados": "Dorado y plateado agotados. Solo quedan negro y oro rosa."
+   "colores_agotados": "Solo quedan negro y oro rosa."
   },
   {
    "ref": "BLK-043",
@@ -8364,7 +8364,7 @@
    "detalle": "",
    "archivo": "BLK-043.jpg",
    "disponible": true,
-   "sh": "sp/PINATERIA_0.jpg",
+   "sh": "sp/PINATERIA_0-v2.jpg",
    "ci": 1
   },
   {
@@ -8377,7 +8377,7 @@
    "detalle": "",
    "archivo": "BLK-044.jpg",
    "disponible": true,
-   "sh": "sp/PINATERIA_0.jpg",
+   "sh": "sp/PINATERIA_0-v2.jpg",
    "ci": 2
   },
   {
@@ -8390,7 +8390,7 @@
    "detalle": "",
    "archivo": "BLK-046.jpg",
    "disponible": true,
-   "sh": "sp/PINATERIA_0.jpg",
+   "sh": "sp/PINATERIA_0-v2.jpg",
    "ci": 3
   },
   {
@@ -8403,7 +8403,7 @@
    "detalle": "16\"",
    "archivo": "BLK-049.jpg",
    "disponible": true,
-   "sh": "sp/PINATERIA_0.jpg",
+   "sh": "sp/PINATERIA_0-v2.jpg",
    "ci": 4
   },
   {
@@ -8416,7 +8416,7 @@
    "detalle": "16\"",
    "archivo": "BLK-213.jpg",
    "disponible": true,
-   "sh": "sp/PINATERIA_0.jpg",
+   "sh": "sp/PINATERIA_0-v2.jpg",
    "ci": 5
   },
   {
@@ -8429,7 +8429,7 @@
    "detalle": "16\"",
    "archivo": "BLK-215.jpg",
    "disponible": true,
-   "sh": "sp/PINATERIA_0.jpg",
+   "sh": "sp/PINATERIA_0-v2.jpg",
    "ci": 6
   },
   {
@@ -8442,7 +8442,7 @@
    "detalle": "16\"",
    "archivo": "BLK-217.jpg",
    "disponible": true,
-   "sh": "sp/PINATERIA_0.jpg",
+   "sh": "sp/PINATERIA_0-v2.jpg",
    "ci": 7
   },
   {
@@ -8455,7 +8455,7 @@
    "detalle": "16\"",
    "archivo": "BLK-218.jpg",
    "disponible": true,
-   "sh": "sp/PINATERIA_0.jpg",
+   "sh": "sp/PINATERIA_0-v2.jpg",
    "ci": 8
   },
   {
@@ -8468,7 +8468,7 @@
    "detalle": "16\"",
    "archivo": "BLK-338.jpg",
    "disponible": true,
-   "sh": "sp/PINATERIA_0.jpg",
+   "sh": "sp/PINATERIA_0-v2.jpg",
    "ci": 9
   },
   {
@@ -8481,7 +8481,7 @@
    "detalle": "32\"",
    "archivo": "BLK-340.jpg",
    "disponible": true,
-   "sh": "sp/PINATERIA_0.jpg",
+   "sh": "sp/PINATERIA_0-v2.jpg",
    "ci": 10
   },
   {
@@ -8494,7 +8494,7 @@
    "detalle": "16\"",
    "archivo": "BLK-GL1.jpg",
    "disponible": true,
-   "sh": "sp/PINATERIA_0.jpg",
+   "sh": "sp/PINATERIA_0-v2.jpg",
    "ci": 11
   },
   {
@@ -8507,7 +8507,7 @@
    "detalle": "16\"",
    "archivo": "BLK-GL1-1.jpg",
    "disponible": true,
-   "sh": "sp/PINATERIA_0.jpg",
+   "sh": "sp/PINATERIA_0-v2.jpg",
    "ci": 12
   },
   {
@@ -8520,7 +8520,7 @@
    "detalle": "",
    "archivo": "BLK-GL10.jpg",
    "disponible": true,
-   "sh": "sp/PINATERIA_0.jpg",
+   "sh": "sp/PINATERIA_0-v2.jpg",
    "ci": 13
   },
   {
@@ -8533,7 +8533,7 @@
    "detalle": "",
    "archivo": "BLK-GL10-1.jpg",
    "disponible": true,
-   "sh": "sp/PINATERIA_0.jpg",
+   "sh": "sp/PINATERIA_0-v2.jpg",
    "ci": 14
   },
   {
@@ -8546,7 +8546,7 @@
    "detalle": "",
    "archivo": "BLK-GL10-5.jpg",
    "disponible": true,
-   "sh": "sp/PINATERIA_0.jpg",
+   "sh": "sp/PINATERIA_0-v2.jpg",
    "ci": 15
   },
   {
@@ -8559,7 +8559,7 @@
    "detalle": "",
    "archivo": "BLK-GL10-6.jpg",
    "disponible": true,
-   "sh": "sp/PINATERIA_0.jpg",
+   "sh": "sp/PINATERIA_0-v2.jpg",
    "ci": 16
   },
   {
@@ -8572,7 +8572,7 @@
    "detalle": "",
    "archivo": "BLK-GL10-7.jpg",
    "disponible": true,
-   "sh": "sp/PINATERIA_0.jpg",
+   "sh": "sp/PINATERIA_0-v2.jpg",
    "ci": 17
   },
   {
@@ -8585,7 +8585,7 @@
    "detalle": "",
    "archivo": "BLK-GL10-8.jpg",
    "disponible": true,
-   "sh": "sp/PINATERIA_0.jpg",
+   "sh": "sp/PINATERIA_0-v2.jpg",
    "ci": 18
   },
   {
@@ -8598,7 +8598,7 @@
    "detalle": "",
    "archivo": "BLK-GL3.jpg",
    "disponible": true,
-   "sh": "sp/PINATERIA_0.jpg",
+   "sh": "sp/PINATERIA_0-v2.jpg",
    "ci": 19
   },
   {
@@ -8611,7 +8611,7 @@
    "detalle": "",
    "archivo": "BLK-GL3-1.jpg",
    "disponible": true,
-   "sh": "sp/PINATERIA_0.jpg",
+   "sh": "sp/PINATERIA_0-v2.jpg",
    "ci": 20
   },
   {
@@ -8624,7 +8624,7 @@
    "detalle": "",
    "archivo": "BLK-GL5.jpg",
    "disponible": true,
-   "sh": "sp/PINATERIA_0.jpg",
+   "sh": "sp/PINATERIA_0-v2.jpg",
    "ci": 21
   },
   {
@@ -8637,7 +8637,7 @@
    "detalle": "",
    "archivo": "BLK-GL6-1.jpg",
    "disponible": true,
-   "sh": "sp/PINATERIA_0.jpg",
+   "sh": "sp/PINATERIA_0-v2.jpg",
    "ci": 22
   },
   {
@@ -8650,7 +8650,7 @@
    "detalle": "",
    "archivo": "BLK-GL7.jpg",
    "disponible": true,
-   "sh": "sp/PINATERIA_0.jpg",
+   "sh": "sp/PINATERIA_0-v2.jpg",
    "ci": 23,
    "preventa": true
   },
@@ -8664,7 +8664,7 @@
    "detalle": "",
    "archivo": "BLK-GL9.jpg",
    "disponible": true,
-   "sh": "sp/PINATERIA_0.jpg",
+   "sh": "sp/PINATERIA_0-v2.jpg",
    "ci": 24
   },
   {
