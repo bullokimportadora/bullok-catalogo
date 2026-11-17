@@ -3899,10 +3899,10 @@
    "bulto": "200",
    "detalle": "8.5\" · escritura y dibujo",
    "archivo": "BLK-J13.jpg",
-   "disponible": true,
+   "disponible": false,
    "sh": "sp/JUGUETERIA_6.jpg",
    "ci": 9,
-   "preventa": true
+   "preventa": false
   },
   {
    "ref": "BLK-J13-1",
@@ -3913,10 +3913,10 @@
    "bulto": "200",
    "detalle": "8.5\" · escritura y dibujo",
    "archivo": "BLK-J13-1.jpg",
-   "disponible": true,
+   "disponible": false,
    "sh": "sp/JUGUETERIA_6.jpg",
    "ci": 10,
-   "preventa": true
+   "preventa": false
   },
   {
    "ref": "BLK-J13-2",
@@ -3927,10 +3927,10 @@
    "bulto": "200",
    "detalle": "8.5\" · escritura y dibujo",
    "archivo": "BLK-J13-2.jpg",
-   "disponible": true,
+   "disponible": false,
    "sh": "sp/JUGUETERIA_6.jpg",
    "ci": 11,
-   "preventa": true
+   "preventa": false
   },
   {
    "ref": "BLK-J13-3",
@@ -3941,10 +3941,10 @@
    "bulto": "200",
    "detalle": "8.5\" · escritura y dibujo",
    "archivo": "BLK-J13-3.jpg",
-   "disponible": true,
+   "disponible": false,
    "sh": "sp/JUGUETERIA_6.jpg",
    "ci": 12,
-   "preventa": true
+   "preventa": false
   },
   {
    "ref": "FD1351-1",
