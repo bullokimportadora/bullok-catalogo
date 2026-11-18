@@ -10771,6 +10771,27 @@ function init(d){
   PRODUCTOS=applyOverrides(d.productos.map(p=>Object.assign({},p)));
   PRODUCTOS.forEach((p,i)=>p.id=i);
   renderCats();renderGrid();updateCart();
+  applyCatFromURL();
+}
+/* ---- Enlace directo a una categoria: ?cat=didacticos ---- */
+function catSlug(s){return String(s==null?'':s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]/g,'');}
+function findLineaBySlug(np){
+  if(!np)return null;
+  if(np==='preventa'&&typeof hasPreventa==='function'&&hasPreventa())return PREVENTA;
+  for(const l of (LINEAS||[])){
+    const ls=catSlug(l), fw=catSlug(String(l).split(' ')[0]);
+    if(ls.startsWith(np)||(fw&&np.startsWith(fw)))return l;
+  }
+  return null;
+}
+function applyCatFromURL(){
+  let raw='';
+  try{raw=new URLSearchParams(location.search).get('cat')||'';}catch(e){}
+  if(!raw){const m=(location.hash||'').match(/cat=([^&]+)/);if(m)raw=decodeURIComponent(m[1]);}
+  const np=catSlug(raw); if(!np)return;
+  const L=findLineaBySlug(np); if(!L)return;
+  filtroL=L;filtroS='Todas';renderCats();renderGrid();
+  setTimeout(()=>{const g=document.querySelector('.grid-wrap');if(g){const y=g.getBoundingClientRect().top+window.scrollY-120;window.scrollTo({top:Math.max(0,y),behavior:'smooth'});}},200);
 }
 /* ---- Enlace imprimible para bodega (lista de separación) ---- */
 function b64e(s){try{return btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}catch(e){return '';}}
