@@ -174,9 +174,14 @@ body.searching .hero,body.searching .imp,body.searching .preventa-aviso,body.pre
 .cust .f-full{grid-column:1 / -1;}
 .cust label{display:block;font-size:10.5px;color:var(--ink-soft);margin:0 0 3px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;}
 .cust label .req{color:var(--brand);}
-.cust input{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:9px 10px;font-size:13.5px;color:var(--ink);font-family:inherit;}
-.cust input:focus{outline:none;border-color:var(--brand);}
+.cust input,.cust textarea{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:9px 10px;font-size:13.5px;color:var(--ink);font-family:inherit;}
+.cust textarea{resize:vertical;min-height:46px;line-height:1.35;}
+.cust input:focus,.cust textarea:focus{outline:none;border-color:var(--brand);}
 .cust input.err{border-color:#E0566F;background:rgba(224,86,111,.07);}
+.card__pe{display:flex;align-items:center;gap:7px;margin:7px 0 2px;font-size:12px;font-weight:700;color:var(--ink-soft);}
+.card__pe input{width:96px;font-family:inherit;font-size:13px;font-weight:700;padding:6px 8px;border:1px solid var(--line);border-radius:8px;color:var(--ink);background:var(--bg);-moz-appearance:textfield;}
+.card__pe input:focus{outline:none;border-color:var(--brand);}
+.card__pe input::-webkit-outer-spin-button,.card__pe input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
 .btn-print{width:100%;margin-top:9px;background:rgba(255,255,255,.08);color:var(--ink);border:1px solid var(--line);padding:13px;border-radius:12px;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:9px;transition:background .15s;}
 .btn-print:hover{background:rgba(255,255,255,.15);}
 .btn-print:disabled{opacity:.45;cursor:not-allowed;}
@@ -309,6 +314,7 @@ body.searching .hero,body.searching .imp,body.searching .preventa-aviso,body.pre
         <div><label>Ciudad <span class="req">*</span></label><input id="cCiudad" type="text" placeholder="Ciudad"></div>
         <div><label>Vendedor que atiende</label><input id="cVendedor" type="text" placeholder="Nombre del vendedor"></div>
         <div class="f-full"><label>Dirección de entrega <span class="req">*</span></label><input id="cDireccion" type="text" autocomplete="street-address" placeholder="Dirección / barrio"></div>
+        <div class="f-full"><label>Observaciones del pedido</label><textarea id="cObs" rows="2" placeholder="Notas para despacho: ej. entregar en la tarde, llamar antes, empacar aparte, factura a nombre de…"></textarea></div>
       </div>
       </div>
     </div>
@@ -10809,7 +10815,7 @@ function applyCatFromURL(){
 /* ---- Enlace imprimible para bodega (lista de separación) ---- */
 function b64e(s){try{return btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}catch(e){return '';}}
 function b64d(s){s=String(s).replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return decodeURIComponent(escape(atob(s)));}
-function orderPayload(no,fch){const c=custData();return {n:no,f:fch,c:{nm:c.nombre,ni:c.nit,tl:c.tel,ci:c.ciudad,di:c.direccion,ve:c.vendedor},it:cartEntries().map(e=>[e.p.ref,(e.p.nombre||e.p.ref),(e.p.detalle||''),e.q,e.u,lineEff(e),(e.p.precio||0),(e.nota||'')])};}
+function orderPayload(no,fch){const c=custData();return {n:no,f:fch,c:{nm:c.nombre,ni:c.nit,tl:c.tel,ci:c.ciudad,di:c.direccion,ve:c.vendedor,ob:c.obs},it:cartEntries().map(e=>[e.p.ref,(e.p.nombre||e.p.ref),(e.p.detalle||''),e.q,e.u,lineEff(e),(e.p.precio||0),(e.nota||'')])};}
 function orderLink(no,fch){return location.origin+location.pathname+'#sep='+b64e(JSON.stringify(orderPayload(no,fch)));}
 function sepStyles(){return '*{box-sizing:border-box;margin:0;padding:0;}'
  +'body{font-family:Arial,Helvetica,sans-serif;color:#15161A;background:#e9edf2;font-size:13px;}'
@@ -10867,6 +10873,7 @@ function buildPicking(data){
      +fldReq('Ciudad',c.ci,'big')
      +fldReq('Dirección de entrega',c.di,'full big')
      +fld('Vendedor',c.ve)
+     +fld('Observaciones',c.ob,'full')
    +'</div></div>'
    +'<table class="sep-it"><thead><tr><th class="chk">✓</th><th>#</th><th>Ref.</th><th>Producto</th><th class="c">Cant.</th><th class="c">Tipo</th><th class="r">Vlr. unit.</th><th class="r">Subtotal</th></tr></thead><tbody>'+rows
    +'<tr class="sep-tot"><td></td><td></td><td></td><td class="r">TOTALES</td><td class="c">'+totCant+'</td><td class="c">'+it.length+' líneas</td><td class="r">TOTAL</td><td class="r">'+money.format(totVal)+'</td></tr>'
@@ -11007,6 +11014,7 @@ function cardView(p){
     '<div class="card__price">'+money.format(p.precio)+' <small>'+uSuf(p)+'</small></div>'+
     (p.colores_agotados?'<p style="margin:3px 0 6px;font-size:12px;font-weight:700;color:#c0392b;background:rgba(192,57,43,.08);border:1px solid rgba(192,57,43,.25);border-radius:7px;padding:6px 9px">⚠️ '+String(p.colores_agotados).replace(/</g,"&lt;")+'</p>':'')+
     '<input id="nota-'+p.id+'" class="card__nota" type="text" placeholder="🎨 Color / motivo: ej. 20 rojas, 10 azules" oninput="notaSum('+p.id+')">'+
+    (p.precio!=null?'<div class="card__pe">Precio c/u $<input type="number" id="precio-'+p.id+'" min="0" value="'+p.precio+'" inputmode="numeric" title="Puedes cambiar el precio antes de agregar"></div>':'')+
     '<div class="card__actions"><div class="stepper"><button onclick="stepCard('+p.id+',-1)">−</button><input type="number" id="qty-'+p.id+'" value="1" min="1"></button><button onclick="stepCard('+p.id+',1)">+</button></div>'+
     '<button class="add-btn" id="add-'+p.id+'" onclick="addToCart('+p.id+')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg><span>Agregar</span></button></div>'+
     (p.bulto?'<p class="card__meta" style="margin-top:-2px">'+bultoTxt(p)+'</p>':'')+
@@ -11043,7 +11051,7 @@ function openLightbox(id){const p=PRODUCTOS[id];const box=document.getElementByI
 function closeLightbox(){document.getElementById('lightbox').classList.remove('open');}
 function stepCard(id,d){const inp=document.getElementById('qty-'+id);let v=parseInt(inp.value||1)+d;if(v<1)v=1;inp.value=v;}
 function notaSum(id){const el=document.getElementById('nota-'+id);if(!el)return;const nums=(el.value.match(/\d+/g)||[]).map(Number);if(nums.length){const s=nums.reduce((a,b)=>a+b,0);const q=document.getElementById('qty-'+id);if(q)q.value=(s>0?s:1);}}
-function addToCart(id){const inp=document.getElementById('qty-'+id);const q=Math.max(1,parseInt(inp.value||1));const cur=cart[id]||{q:0,u:'Unidad'};const notaEl=document.getElementById('nota-'+id);let add=notaEl?String(notaEl.value||'').trim():'';if(add&&!/^\d/.test(add))add=q+' '+add;let nota=cur.nota||'';if(add)nota=nota?(nota+', '+add):add;cart[id]={q:cur.q+q,u:cur.u||'Unidad',pn:cur.pn,nota:(nota||undefined)};if(notaEl)notaEl.value='';if(add){const qel=document.getElementById('qty-'+id);if(qel)qel.value='1';}saveCart();updateCart();const b=document.getElementById('add-'+id);b.classList.add('added');b.querySelector('span').textContent='Agregado';setTimeout(()=>{b.classList.remove('added');b.querySelector('span').textContent='Agregar';},1100);}
+function addToCart(id){const inp=document.getElementById('qty-'+id);const q=Math.max(1,parseInt(inp.value||1));const cur=cart[id]||{q:0,u:'Unidad'};const notaEl=document.getElementById('nota-'+id);let add=notaEl?String(notaEl.value||'').trim():'';if(add&&!/^\d/.test(add))add=q+' '+add;let nota=cur.nota||'';if(add)nota=nota?(nota+', '+add):add;const p=PRODUCTOS[id];const peEl=document.getElementById('precio-'+id);let pn=cur.pn;if(peEl){const v=parseInt(peEl.value,10);if(!isNaN(v)&&v>=0&&v!==(p.precio||0))pn=v;}cart[id]={q:cur.q+q,u:cur.u||'Unidad',pn:pn,nota:(nota||undefined)};if(notaEl)notaEl.value='';if(add){const qel=document.getElementById('qty-'+id);if(qel)qel.value='1';}saveCart();updateCart();const b=document.getElementById('add-'+id);b.classList.add('added');b.querySelector('span').textContent='Agregado';setTimeout(()=>{b.classList.remove('added');b.querySelector('span').textContent='Agregar';},1100);}
 function setQty(id,q){q=parseInt(q);if(isNaN(q)||q<=0){delete cart[id];}else{const cur=cart[id]||{u:'Unidad'};cart[id]={q:q,u:cur.u||'Unidad',pn:cur.pn,nota:cur.nota};}saveCart();updateCart();}
 function setTipo(id,u){if(cart[id]){cart[id].u=u;saveCart();updateCart();}}
 function setPrecio(id,v){if(!cart[id])return;v=(v===''?null:parseInt(v,10));if(v===null||isNaN(v)||v<0){delete cart[id].pn;}else{cart[id].pn=v;}saveCart();updateCart();}
@@ -11069,7 +11077,7 @@ function updateCart(){
 }
 /* ---- Datos del cliente ---- */
 const CUSTF=['cNombre','cNit','cTel','cCiudad','cVendedor','cDireccion'];
-function custData(){const g=id=>(document.getElementById(id)?.value||'').trim();return {nombre:g('cNombre'),nit:g('cNit'),tel:g('cTel'),ciudad:g('cCiudad'),vendedor:g('cVendedor'),direccion:g('cDireccion')};}
+function custData(){const g=id=>(document.getElementById(id)?.value||'').trim();return {nombre:g('cNombre'),nit:g('cNit'),tel:g('cTel'),ciudad:g('cCiudad'),vendedor:g('cVendedor'),direccion:g('cDireccion'),obs:g('cObs')};}
 function saveCust(){try{localStorage.setItem('bullok_cust',JSON.stringify(custData()));}catch(e){}}
 function loadCust(){try{const c=JSON.parse(localStorage.getItem('bullok_cust'))||{};const m={cNombre:c.nombre,cNit:c.nit,cTel:c.tel,cCiudad:c.ciudad,cVendedor:c.vendedor,cDireccion:c.direccion};CUSTF.forEach(id=>{const el=document.getElementById(id);if(el&&m[id])el.value=m[id];});}catch(e){}}
 let custOpen=false;
@@ -11102,6 +11110,7 @@ function buildMessage(){
   d+=NL+'*TOTAL: '+money.format(cartTotal())+'*'+NL;
   d+='Líneas: '+L.length+'  ·  Cantidad total: '+cartUnits()+NL;
   if(huboNego)d+='⚠️ Pedido con precios negociados'+NL;
+  if(c.obs)d+=NL+'📝 *OBSERVACIONES:* '+c.obs+NL;
   d+=NL+'————————'+NL;
   d+='🖨 *Imprimir para bodega* (lista de separación):'+NL;
   d+=orderLink(no,fch)+NL;
@@ -11117,6 +11126,7 @@ function toast(msg){let t=document.getElementById('toast');if(!t){t=document.cre
 function resetOrder(){
   cart={};saveCart();
   CUSTF.forEach(id=>{if(id==='cVendedor')return;const el=document.getElementById(id);if(el){el.value='';el.classList.remove('err');}});
+  const ob=document.getElementById('cObs');if(ob)ob.value='';
   saveCust();
   updateCart();renderGrid();closeCart();
 }
@@ -11131,7 +11141,7 @@ function buildOrderHTML(){
    +'<div class="po-body">'
    +'<div class="po-co">'+CONFIG.negocio+' · NIT 901.790.220-1 · Tel. 310 454 4685 · Medellín, Colombia</div>'
    +'<h2 class="po-h2">Datos del cliente</h2><table class="po-cli">'
-   +row('Nombre / Razón social',c.nombre)+row('NIT / C.C.',c.nit)+row('Ciudad',c.ciudad)+row('Dirección',c.direccion)+row('Teléfono',c.tel)+row('Vendedor que atiende',c.vendedor)
+   +row('Nombre / Razón social',c.nombre)+row('NIT / C.C.',c.nit)+row('Ciudad',c.ciudad)+row('Dirección',c.direccion)+row('Teléfono',c.tel)+row('Vendedor que atiende',c.vendedor)+row('Observaciones',c.obs)
    +'</table>'
    +'<h2 class="po-h2">Detalle del pedido</h2><table class="po-it"><thead><tr><th>#</th><th>Ref.</th><th>Producto</th><th class="c">Cant.</th><th class="c">Tipo</th><th class="r">Vlr. unit.</th><th class="r">Subtotal</th></tr></thead><tbody>'
    +rows
