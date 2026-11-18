@@ -1118,7 +1118,7 @@
    "bulto": "36",
    "detalle": "34.5×26.5×6.2 cm",
    "archivo": "123-2.jpg",
-   "disponible": true,
+   "disponible": false,
    "sh": "sp/JUGUETERIA_1.jpg",
    "ci": 9
   },
@@ -1391,7 +1391,7 @@
    "bulto": "24",
    "detalle": "24.5×11×6.5 cm",
    "archivo": "A415168.jpg",
-   "disponible": true,
+   "disponible": false,
    "sh": "sp/JUGUETERIA_1.jpg",
    "ci": 24
   },
@@ -1547,7 +1547,7 @@
    "bulto": "216",
    "detalle": "14×7 cm",
    "archivo": "BLK-070.jpg",
-   "disponible": true,
+   "disponible": false,
    "sh": "sp/JUGUETERIA_2.jpg",
    "ci": 11
   },
@@ -2042,7 +2042,7 @@
    "bulto": "288",
    "detalle": "6.5 cm",
    "archivo": "BLK-314.jpg",
-   "disponible": true,
+   "disponible": false,
    "sh": "sp/JUGUETERIA_3.jpg",
    "ci": 12
   },
@@ -3761,10 +3761,10 @@
    "bulto": "504",
    "detalle": "Escala 1:64 · metálico · surtido",
    "archivo": "BLK-J4.jpg",
-   "disponible": true,
+   "disponible": false,
    "sh": "sp/JUGUETERIA_5.jpg",
    "ci": 24,
-   "preventa": true
+   "preventa": false
   },
   {
    "ref": "BLK-J3",
@@ -4037,10 +4037,10 @@
    "bulto": "60",
    "detalle": "#5",
    "archivo": "BLK-BL5.jpg",
-   "disponible": true,
+   "disponible": false,
    "sh": "sp/JUGUETERIA_6.jpg",
    "ci": 19,
-   "preventa": true
+   "preventa": false
   },
   {
    "ref": "BLK-BL6",
@@ -4051,10 +4051,10 @@
    "bulto": "60",
    "detalle": "#5",
    "archivo": "BLK-BL6.jpg",
-   "disponible": true,
+   "disponible": false,
    "sh": "sp/JUGUETERIA_6.jpg",
    "ci": 20,
-   "preventa": true
+   "preventa": false
   },
   {
    "ref": "BLK-BU1",
@@ -4149,10 +4149,10 @@
    "bulto": "96",
    "detalle": "10×15 cm",
    "archivo": "BLK-BU7.jpg",
-   "disponible": true,
+   "disponible": false,
    "sh": "sp/JUGUETERIA_7.jpg",
    "ci": 2,
-   "preventa": true
+   "preventa": false
   },
   {
    "ref": "BLK-BU8",
@@ -8114,7 +8114,7 @@
    "bulto": "600",
    "detalle": "",
    "archivo": "LM1701-1.jpg",
-   "disponible": true,
+   "disponible": false,
    "sh": "sp/HOGAR_3.jpg",
    "ci": 1
   },
@@ -9767,7 +9767,8 @@
    "archivo": "LP2-30.jpg",
    "disponible": true,
    "sh": "sp/PINATERIA_4.jpg",
-   "ci": 8
+   "ci": 8,
+   "colores_agotados": "Solo queda color azul."
   },
   {
    "ref": "BLK-059",
