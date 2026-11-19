@@ -832,7 +832,7 @@
    "bulto": "36",
    "detalle": "Juego de fichas · familiar",
    "archivo": "WFM949998.jpg",
-   "disponible": true,
+   "disponible": false,
    "sh": "sp/JUGUETERIA_0.jpg",
    "ci": 12
   },
