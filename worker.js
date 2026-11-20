@@ -41,6 +41,7 @@ export default {
       if (p === '/api/pedido' && req.method === 'POST') return await crearPedido(req, env);
       if (p === '/api/pedido' && req.method === 'GET') return await traerPedido(req, env);
       if (p === '/api/pedido/actualizar' && req.method === 'POST') return await actualizarPedido(req, env);
+      if (p === '/api/pedido/eliminar' && req.method === 'POST') return await eliminarPedido(req, env);
       if (p === '/api/pedidos' && req.method === 'GET') return await listarPedidos(req, env);
       if (p === '/api/clientes' && req.method === 'GET') return await buscarClientes(req, env);
       return json({ ok: false, error: 'ruta no encontrada' }, 404);
@@ -191,6 +192,16 @@ async function actualizarPedido(req, env) {
     )
     .run();
   await upsertCliente(env, c, new Date().toISOString());
+  return json({ ok: true, numero });
+}
+
+// --- Eliminar un pedido (protegido con clave) ---
+async function eliminarPedido(req, env) {
+  if (!autorizado(req, env)) return json({ ok: false, error: 'no-auth' }, 401);
+  const b = await req.json();
+  const numero = (b.numero || '').trim();
+  if (!numero) return json({ ok: false, error: 'falta numero' }, 400);
+  await env.DB.prepare(`DELETE FROM pedidos WHERE numero=?`).bind(numero).run();
   return json({ ok: true, numero });
 }
 
