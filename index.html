@@ -11324,7 +11324,7 @@ async function reimprimir(numero){
   var hc=document.getElementById('histClose');if(hc)hc.onclick=cerrarHist;
   var hq=document.getElementById('histQ');if(hq)hq.oninput=histInput;
   var cb=document.getElementById('cliBuscar');if(cb)cb.oninput=cliBuscarInput;
-  ['cTel','cDireccion'].forEach(function(id){var e=document.getElementById(id);if(e)e.addEventListener('input',function(){e.classList.remove('confirm-field');});});
+  ['cTel','cDireccion'].forEach(function(id){var e=document.getElementById(id);if(e){['focus','input'].forEach(function(ev){e.addEventListener(ev,function(){e.classList.remove('confirm-field');});});}});
   teamSync();
 })();
 function saveCart(){try{localStorage.setItem('bullok_cart',JSON.stringify(cart));}catch(e){}}
