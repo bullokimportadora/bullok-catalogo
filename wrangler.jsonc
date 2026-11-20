@@ -1,5 +1,9 @@
 {
   "name": "bullok-catalogo",
   "compatibility_date": "2026-01-01",
-  "assets": { "directory": "./" }
+  "main": "worker.js",
+  "assets": { "directory": "./", "binding": "ASSETS" },
+  "d1_databases": [
+    { "binding": "DB", "database_name": "bullok-pedidos", "database_id": "d3b8ca44-054c-46d1-bace-333b5c7164db" }
+  ]
 }
