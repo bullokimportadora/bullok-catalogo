@@ -40,6 +40,7 @@ export default {
       if (p === '/api/import' && req.method === 'POST') return await importarClientes(req, env);
       if (p === '/api/pedido' && req.method === 'POST') return await crearPedido(req, env);
       if (p === '/api/pedido' && req.method === 'GET') return await traerPedido(req, env);
+      if (p === '/api/pedido/actualizar' && req.method === 'POST') return await actualizarPedido(req, env);
       if (p === '/api/pedidos' && req.method === 'GET') return await listarPedidos(req, env);
       if (p === '/api/clientes' && req.method === 'GET') return await buscarClientes(req, env);
       return json({ ok: false, error: 'ruta no encontrada' }, 404);
@@ -165,6 +166,32 @@ async function listarPedidos(req, env) {
     ).all();
   }
   return json({ ok: true, pedidos: r.results || [] });
+}
+
+// --- Actualizar un pedido existente (protegido con clave) ---
+async function actualizarPedido(req, env) {
+  if (!autorizado(req, env)) return json({ ok: false, error: 'no-auth' }, 401);
+  const b = await req.json();
+  const numero = (b.numero || '').trim();
+  if (!numero) return json({ ok: false, error: 'falta numero' }, 400);
+  const row = await env.DB.prepare(`SELECT id FROM pedidos WHERE numero=? LIMIT 1`).bind(numero).first();
+  if (!row) return json({ ok: false, error: 'no existe' }, 404);
+  const c = b.cliente || {};
+  await env.DB.prepare(
+    `UPDATE pedidos SET cliente_nombre=?,cliente_razon=?,cliente_tel=?,cliente_nit=?,cliente_cedula=?,
+       ciudad=?,direccion=?,vendedor=?,observaciones=?,total=?,items_json=?,payload_json=? WHERE id=?`
+  )
+    .bind(
+      c.nombre || '', c.razon || '', c.tel || '', c.nit || '', c.cedula || '',
+      c.ciudad || '', c.direccion || '', c.vendedor || '',
+      b.observaciones || '', Number(b.total) || 0,
+      JSON.stringify(b.items || []),
+      JSON.stringify(b.payload || b),
+      row.id
+    )
+    .run();
+  await upsertCliente(env, c, new Date().toISOString());
+  return json({ ok: true, numero });
 }
 
 // --- Traer un pedido completo para reimprimir (protegido con clave) ---
