@@ -135,7 +135,7 @@ body.searching .hero,body.searching .imp,body.searching .preventa-aviso,body.pre
 .badge-pend{position:absolute;top:10px;right:10px;background:var(--amber);color:#fff;font-size:11px;font-weight:700;padding:4px 9px;border-radius:7px;}
 .overlay{position:fixed;inset:0;background:rgba(20,27,46,.5);opacity:0;visibility:hidden;transition:opacity .25s;z-index:50;}
 .overlay.open{opacity:1;visibility:visible;}
-.drawer{position:fixed;top:0;right:0;height:100%;width:460px;max-width:100%;background:var(--bg);z-index:60;transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:-10px 0 40px rgba(20,27,46,.18);}
+.drawer{position:fixed;top:0;right:0;height:100%;height:100dvh;width:100%;max-width:100%;background:var(--bg);z-index:60;transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:-10px 0 40px rgba(20,27,46,.18);}
 .drawer.open{transform:translateX(0);}
 .drawer__head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;background:var(--surface);border-bottom:1px solid var(--line);}
 .drawer__head h2{font-family:"Chakra Petch";font-weight:700;font-size:19px;margin:0;}
@@ -186,7 +186,7 @@ body.searching .hero,body.searching .imp,body.searching .preventa-aviso,body.pre
 .btn-print:hover{background:rgba(255,255,255,.15);}
 .btn-print:disabled{opacity:.45;cursor:not-allowed;}
 @media(min-width:860px){
-  .drawer{width:100vw;max-width:none;display:grid;grid-template-columns:1.25fr 1fr;grid-template-rows:auto minmax(0,1fr);grid-template-areas:"head head" "items foot";box-shadow:none;}
+  .drawer{width:100%;max-width:none;display:grid;grid-template-columns:1.25fr 1fr;grid-template-rows:auto minmax(0,1fr);grid-template-areas:"head head" "items foot";box-shadow:none;}
   .drawer__head{grid-area:head;}
   .drawer__items{grid-area:items;min-height:0;padding:20px 26px;}
   .drawer__foot{grid-area:foot;display:flex;flex-direction:column;max-height:none;min-height:0;border-top:none;border-left:1px solid var(--line);padding:20px 26px 24px;}
