@@ -37,6 +37,7 @@ export default {
 
     try {
       if (p === '/api/login' && req.method === 'POST') return await login(req, env);
+      if (p === '/api/import' && req.method === 'POST') return await importarClientes(req, env);
       if (p === '/api/pedido' && req.method === 'POST') return await crearPedido(req, env);
       if (p === '/api/pedido' && req.method === 'GET') return await traerPedido(req, env);
       if (p === '/api/pedidos' && req.method === 'GET') return await listarPedidos(req, env);
@@ -116,6 +117,17 @@ async function upsertCliente(env, c, fecha) {
       )
       .run();
   }
+}
+
+// --- Importar clientes en lote (protegido con clave) ---
+async function importarClientes(req, env) {
+  if (!autorizado(req, env)) return json({ ok: false, error: 'no-auth' }, 401);
+  const b = await req.json();
+  const arr = Array.isArray(b.clientes) ? b.clientes : [];
+  const fecha = new Date().toISOString();
+  let n = 0;
+  for (const c of arr) { await upsertCliente(env, c, fecha); n++; }
+  return json({ ok: true, importados: n });
 }
 
 // --- Buscar clientes para autollenar (protegido con clave) ---
