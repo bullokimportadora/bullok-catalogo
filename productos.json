@@ -1728,7 +1728,7 @@
    "bulto": "144",
    "detalle": "",
    "archivo": "BLK-108.jpg",
-   "disponible": true,
+   "disponible": false,
    "sh": "sp/JUGUETERIA_2.jpg",
    "ci": 15
   },
@@ -6331,7 +6331,7 @@
    "bulto": 24,
    "detalle": "10.3×1.6 cm",
    "archivo": "ML-21.jpg",
-   "disponible": true,
+   "disponible": false,
    "empaque": 24,
    "sh": "sp/MAQUILLAJE_0.jpg",
    "ci": 7
