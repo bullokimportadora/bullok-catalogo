@@ -6307,6 +6307,21 @@
    "ci": 6
   },
   {
+   "ref": "ML31",
+   "nombre": "Brillo labial",
+   "linea": "Belleza y Accesorios",
+   "sub": "Labios",
+   "precio": 69600,
+   "unidad": "paq",
+   "bulto": 30,
+   "detalle": "3.1×10.4 cm · con llavero osito · 6 colores (amarillo, rosado, fucsia, morado, azul rey, azul celeste)",
+   "archivo": "ML31.jpg",
+   "disponible": true,
+   "empaque": 24,
+   "sh": "sp/MAQUILLAJE_1-v2.jpg",
+   "ci": 5
+  },
+  {
    "ref": "ML-21",
    "nombre": "Brillo labial",
    "linea": "Belleza y Accesorios",
@@ -6583,7 +6598,7 @@
    "detalle": "5×6 cm · V7",
    "archivo": "BQY04178.jpg",
    "disponible": true,
-   "sh": "sp/MAQUILLAJE_1.jpg",
+   "sh": "sp/MAQUILLAJE_1-v2.jpg",
    "ci": 0
   },
   {
@@ -6598,7 +6613,7 @@
    "archivo": "6705B.jpg",
    "disponible": true,
    "empaque": 24,
-   "sh": "sp/MAQUILLAJE_1.jpg",
+   "sh": "sp/MAQUILLAJE_1-v2.jpg",
    "ci": 1
   },
   {
@@ -6613,7 +6628,7 @@
    "archivo": "6664D.jpg",
    "disponible": true,
    "empaque": 12,
-   "sh": "sp/MAQUILLAJE_1.jpg",
+   "sh": "sp/MAQUILLAJE_1-v2.jpg",
    "ci": 2
   },
   {
@@ -6627,7 +6642,7 @@
    "detalle": "20×20 cm · incluye espejo",
    "archivo": "2864-56.jpg",
    "disponible": true,
-   "sh": "sp/MAQUILLAJE_1.jpg",
+   "sh": "sp/MAQUILLAJE_1-v2.jpg",
    "ci": 3
   },
   {
@@ -6642,7 +6657,7 @@
    "archivo": "6693A.jpg",
    "disponible": true,
    "empaque": 12,
-   "sh": "sp/MAQUILLAJE_1.jpg",
+   "sh": "sp/MAQUILLAJE_1-v2.jpg",
    "ci": 4
   },
   {
