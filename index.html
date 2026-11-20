@@ -185,6 +185,16 @@ body.searching .hero,body.searching .imp,body.searching .preventa-aviso,body.pre
 .btn-print{width:100%;margin-top:9px;background:rgba(255,255,255,.08);color:var(--ink);border:1px solid var(--line);padding:13px;border-radius:12px;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:9px;transition:background .15s;}
 .btn-print:hover{background:rgba(255,255,255,.15);}
 .btn-print:disabled{opacity:.45;cursor:not-allowed;}
+@media(min-width:860px){
+  .drawer{width:100vw;max-width:none;display:grid;grid-template-columns:1.25fr 1fr;grid-template-rows:auto minmax(0,1fr);grid-template-areas:"head head" "items foot";box-shadow:none;}
+  .drawer__head{grid-area:head;}
+  .drawer__items{grid-area:items;min-height:0;padding:20px 26px;}
+  .drawer__foot{grid-area:foot;display:flex;flex-direction:column;max-height:none;min-height:0;border-top:none;border-left:1px solid var(--line);padding:20px 26px 24px;}
+  .drawer .cust__body{display:block!important;}
+  .drawer .cust__toggle{cursor:default;pointer-events:none;}
+  .drawer .cust__toggle .chev,.drawer .cust__hint{display:none;}
+  .drawer__items .cart-line{max-width:none;}
+}
 .site-foot{background:var(--panel);color:rgba(255,255,255,.7);padding:36px 20px;border-top:1px solid var(--line);}
 .site-foot__inner{max-width:var(--maxw);margin:0 auto;display:flex;flex-wrap:wrap;gap:28px;justify-content:space-between;}
 .site-foot__inner h3{font-family:"Chakra Petch";color:#fff;font-size:18px;margin:0 0 8px;}
