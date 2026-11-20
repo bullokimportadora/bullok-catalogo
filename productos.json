@@ -209,8 +209,7 @@
    "archivo": "TS-738.jpg",
    "disponible": true,
    "sh": "sp/BASCULAS_0.jpg",
-   "ci": 0,
-   "preventa": true
+   "ci": 0
   },
   {
    "ref": "DWS-218",
@@ -3578,8 +3577,7 @@
    "archivo": "K905CTDM.jpg",
    "disponible": true,
    "sh": "sp/PATINES_0.jpg",
-   "ci": 2,
-   "preventa": true
+   "ci": 2
   },
   {
    "ref": "K905CTDL",
@@ -3592,8 +3590,7 @@
    "archivo": "K905CTDL.jpg",
    "disponible": true,
    "sh": "sp/PATINES_0.jpg",
-   "ci": 3,
-   "preventa": true
+   "ci": 3
   },
   {
    "ref": "K905CTDS",
@@ -3736,8 +3733,7 @@
    "archivo": "SF-400.jpg",
    "disponible": true,
    "sh": "sp/BASCULAS_0.jpg",
-   "ci": 24,
-   "preventa": true
+   "ci": 24
   },
   {
    "ref": "BLK-J5",
@@ -3763,8 +3759,7 @@
    "archivo": "BLK-J4.jpg",
    "disponible": false,
    "sh": "sp/JUGUETERIA_5.jpg",
-   "ci": 24,
-   "preventa": false
+   "ci": 24
   },
   {
    "ref": "BLK-J3",
@@ -3777,8 +3772,7 @@
    "archivo": "BLK-J3.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 0,
-   "preventa": true
+   "ci": 0
   },
   {
    "ref": "BLK-J2",
@@ -3791,8 +3785,7 @@
    "archivo": "BLK-J2.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 1,
-   "preventa": true
+   "ci": 1
   },
   {
    "ref": "BLK-J1",
@@ -3805,8 +3798,7 @@
    "archivo": "BLK-J1.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 2,
-   "preventa": true
+   "ci": 2
   },
   {
    "ref": "BLK-J12",
@@ -3819,8 +3811,7 @@
    "archivo": "BLK-J12.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 3,
-   "preventa": true
+   "ci": 3
   },
   {
    "ref": "BLK-J11",
@@ -3833,8 +3824,7 @@
    "archivo": "BLK-J11.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 4,
-   "preventa": true
+   "ci": 4
   },
   {
    "ref": "BLK-J10",
@@ -3847,8 +3837,7 @@
    "archivo": "BLK-J10.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 5,
-   "preventa": true
+   "ci": 5
   },
   {
    "ref": "BLK-J9",
@@ -3861,8 +3850,7 @@
    "archivo": "BLK-J9.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 6,
-   "preventa": true
+   "ci": 6
   },
   {
    "ref": "BLK-467",
@@ -3901,8 +3889,7 @@
    "archivo": "BLK-J13.jpg",
    "disponible": false,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 9,
-   "preventa": false
+   "ci": 9
   },
   {
    "ref": "BLK-J13-1",
@@ -3915,8 +3902,7 @@
    "archivo": "BLK-J13-1.jpg",
    "disponible": false,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 10,
-   "preventa": false
+   "ci": 10
   },
   {
    "ref": "BLK-J13-2",
@@ -3929,8 +3915,7 @@
    "archivo": "BLK-J13-2.jpg",
    "disponible": false,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 11,
-   "preventa": false
+   "ci": 11
   },
   {
    "ref": "BLK-J13-3",
@@ -3943,8 +3928,7 @@
    "archivo": "BLK-J13-3.jpg",
    "disponible": false,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 12,
-   "preventa": false
+   "ci": 12
   },
   {
    "ref": "FD1351-1",
@@ -3957,8 +3941,7 @@
    "archivo": "FD1351-1.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 13,
-   "preventa": true
+   "ci": 13
   },
   {
    "ref": "BLK-J7",
@@ -3997,8 +3980,7 @@
    "archivo": "BLK-BL1.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 16,
-   "preventa": true
+   "ci": 16
   },
   {
    "ref": "BLK-BL2",
@@ -4011,8 +3993,7 @@
    "archivo": "BLK-BL2.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 17,
-   "preventa": true
+   "ci": 17
   },
   {
    "ref": "BLK-BL4",
@@ -4025,8 +4006,7 @@
    "archivo": "BLK-BL4.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 18,
-   "preventa": true
+   "ci": 18
   },
   {
    "ref": "BLK-BL5",
@@ -4039,8 +4019,7 @@
    "archivo": "BLK-BL5.jpg",
    "disponible": false,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 19,
-   "preventa": false
+   "ci": 19
   },
   {
    "ref": "BLK-BL6",
@@ -4053,8 +4032,7 @@
    "archivo": "BLK-BL6.jpg",
    "disponible": false,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 20,
-   "preventa": false
+   "ci": 20
   },
   {
    "ref": "BLK-BU1",
@@ -4067,8 +4045,7 @@
    "archivo": "BLK-BU1.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 21,
-   "preventa": true
+   "ci": 21
   },
   {
    "ref": "BLK-BU2",
@@ -4081,8 +4058,7 @@
    "archivo": "BLK-BU2.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 22,
-   "preventa": true
+   "ci": 22
   },
   {
    "ref": "BLK-BU3",
@@ -4095,8 +4071,7 @@
    "archivo": "BLK-BU3.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 23,
-   "preventa": true
+   "ci": 23
   },
   {
    "ref": "BLK-BU4",
@@ -4109,8 +4084,7 @@
    "archivo": "BLK-BU4.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_6.jpg",
-   "ci": 24,
-   "preventa": true
+   "ci": 24
   },
   {
    "ref": "BLK-BU5",
@@ -4123,8 +4097,7 @@
    "archivo": "BLK-BU5.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_7.jpg",
-   "ci": 0,
-   "preventa": true
+   "ci": 0
   },
   {
    "ref": "BLK-BU6",
@@ -4137,8 +4110,7 @@
    "archivo": "BLK-BU6.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_7.jpg",
-   "ci": 1,
-   "preventa": true
+   "ci": 1
   },
   {
    "ref": "BLK-BU7",
@@ -4151,8 +4123,7 @@
    "archivo": "BLK-BU7.jpg",
    "disponible": false,
    "sh": "sp/JUGUETERIA_7.jpg",
-   "ci": 2,
-   "preventa": false
+   "ci": 2
   },
   {
    "ref": "BLK-BU8",
@@ -4165,8 +4136,7 @@
    "archivo": "BLK-BU8.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_7.jpg",
-   "ci": 3,
-   "preventa": true
+   "ci": 3
   },
   {
    "ref": "BLK-BU9",
@@ -4179,8 +4149,7 @@
    "archivo": "BLK-BU9.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_7.jpg",
-   "ci": 4,
-   "preventa": true
+   "ci": 4
   },
   {
    "ref": "BLK-BU10",
@@ -4193,8 +4162,7 @@
    "archivo": "BLK-BU10.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_7.jpg",
-   "ci": 5,
-   "preventa": true
+   "ci": 5
   },
   {
    "ref": "MSC-2",
@@ -8351,7 +8319,6 @@
    "disponible": true,
    "sh": "sp/PINATERIA_0-v2.jpg",
    "ci": 0,
-   "preventa": true,
    "colores_agotados": "Solo quedan negro y oro rosa."
   },
   {
@@ -8652,8 +8619,7 @@
    "archivo": "BLK-GL7.jpg",
    "disponible": true,
    "sh": "sp/PINATERIA_0-v2.jpg",
-   "ci": 23,
-   "preventa": true
+   "ci": 23
   },
   {
    "ref": "BLK-GL9",
@@ -8733,7 +8699,6 @@
    "disponible": true,
    "sh": "sp/PINATERIA_1-v4.jpg",
    "ci": 4,
-   "preventa": true,
    "colores_agotados": "Solo quedan oro rosa, plata y negra."
   },
   {
@@ -9010,7 +8975,6 @@
    "disponible": true,
    "sh": "sp/PINATERIA_2-v3.jpg",
    "ci": 0,
-   "preventa": true,
    "colores_agotados": "Disponibles: blanco, azul celeste, morado, dorado, violeta, azul rey, plata, rojo, negro, verde y oro rosa."
   },
   {
@@ -9050,8 +9014,7 @@
    "archivo": "BLK-335.jpg",
    "disponible": true,
    "sh": "sp/PINATERIA_2-v3.jpg",
-   "ci": 3,
-   "preventa": true
+   "ci": 3
   },
   {
    "ref": "BLK-336",
@@ -9715,8 +9678,7 @@
    "archivo": "1444-1.jpg",
    "disponible": true,
    "sh": "sp/PINATERIA_4.jpg",
-   "ci": 4,
-   "preventa": true
+   "ci": 4
   },
   {
    "ref": "1444-3",
@@ -10044,8 +10006,7 @@
    "archivo": null,
    "disponible": true,
    "sh": "sp/CONT9_0.jpg",
-   "ci": 0,
-   "preventa": true
+   "ci": 0
   },
   {
    "ref": "179-7",
@@ -10087,8 +10048,7 @@
    "archivo": null,
    "disponible": true,
    "sh": "sp/CONT9_0.jpg",
-   "ci": 3,
-   "preventa": true
+   "ci": 3
   },
   {
    "ref": "BLK-344",
@@ -10102,8 +10062,7 @@
    "archivo": null,
    "disponible": true,
    "sh": "sp/CONT9_0.jpg",
-   "ci": 4,
-   "preventa": true
+   "ci": 4
   },
   {
    "ref": "BLK-BL3",
@@ -10117,8 +10076,7 @@
    "archivo": null,
    "disponible": true,
    "sh": "sp/CONT9_0.jpg",
-   "ci": 5,
-   "preventa": true
+   "ci": 5
   },
   {
    "ref": "BLK-gl11",
@@ -10132,8 +10090,7 @@
    "archivo": null,
    "disponible": false,
    "sh": "sp/CONT9_0.jpg",
-   "ci": 6,
-   "preventa": false
+   "ci": 6
   },
   {
    "ref": "BLK-gl12",
@@ -10147,8 +10104,7 @@
    "archivo": null,
    "disponible": true,
    "sh": "sp/CONT9_0.jpg",
-   "ci": 7,
-   "preventa": true
+   "ci": 7
   },
   {
    "ref": "BLK-gl13",
@@ -10162,8 +10118,7 @@
    "archivo": null,
    "disponible": false,
    "sh": "sp/CONT9_0.jpg",
-   "ci": 8,
-   "preventa": false
+   "ci": 8
   },
   {
    "ref": "BLK-gl14",
@@ -10177,8 +10132,7 @@
    "archivo": null,
    "disponible": true,
    "sh": "sp/CONT9_0.jpg",
-   "ci": 9,
-   "preventa": true
+   "ci": 9
   },
   {
    "ref": "BLK-gl15",
@@ -10192,8 +10146,7 @@
    "archivo": null,
    "disponible": true,
    "sh": "sp/CONT9_0.jpg",
-   "ci": 10,
-   "preventa": true
+   "ci": 10
   },
   {
    "ref": "BLK-GL2",
@@ -10207,8 +10160,7 @@
    "archivo": null,
    "disponible": true,
    "sh": "sp/CONT9_1.jpg",
-   "ci": 0,
-   "preventa": true
+   "ci": 0
   },
   {
    "ref": "BLK-gl13-2",
@@ -10222,8 +10174,7 @@
    "archivo": null,
    "disponible": true,
    "sh": "sp/CONT9_1.jpg",
-   "ci": 1,
-   "preventa": true
+   "ci": 1
   },
   {
    "ref": "BLK-gl13-3",
@@ -10237,8 +10188,7 @@
    "archivo": null,
    "disponible": true,
    "sh": "sp/CONT9_1.jpg",
-   "ci": 2,
-   "preventa": true
+   "ci": 2
   },
   {
    "ref": "BLK-gl14-1",
@@ -10252,8 +10202,7 @@
    "archivo": null,
    "disponible": true,
    "sh": "sp/CONT9_1.jpg",
-   "ci": 3,
-   "preventa": true
+   "ci": 3
   },
   {
    "ref": "BLK-gl15-1",
@@ -10267,8 +10216,7 @@
    "archivo": null,
    "disponible": true,
    "sh": "sp/CONT9_1.jpg",
-   "ci": 4,
-   "preventa": true
+   "ci": 4
   },
   {
    "ref": "BLK-gl15-2",
@@ -10282,8 +10230,7 @@
    "archivo": null,
    "disponible": true,
    "sh": "sp/CONT9_1.jpg",
-   "ci": 5,
-   "preventa": true
+   "ci": 5
   },
   {
    "ref": "BLK-gl15-5",
@@ -10297,8 +10244,7 @@
    "archivo": null,
    "disponible": true,
    "sh": "sp/CONT9_1.jpg",
-   "ci": 6,
-   "preventa": true
+   "ci": 6
   },
   {
    "ref": "BLK-gl14-3",
@@ -10312,8 +10258,7 @@
    "archivo": null,
    "disponible": false,
    "sh": "sp/CONT9_2.jpg",
-   "ci": 0,
-   "preventa": true
+   "ci": 0
   },
   {
    "ref": "BLK-J14",
@@ -10341,8 +10286,7 @@
    "archivo": null,
    "disponible": false,
    "sh": "sp/CONT9_0.jpg",
-   "ci": 12,
-   "preventa": false
+   "ci": 12
   },
   {
    "ref": "BLK-J16",
