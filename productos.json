@@ -6262,6 +6262,21 @@
    "ci": 3
   },
   {
+   "ref": "MM5034A",
+   "nombre": "Pestañina",
+   "linea": "Belleza y Accesorios",
+   "sub": "Ojos, cejas y sombras",
+   "precio": 67200,
+   "unidad": "paq",
+   "bulto": 30,
+   "detalle": "2×8 cm · a prueba de agua · cepillo de alta precisión",
+   "archivo": "MM5034A.jpg",
+   "disponible": true,
+   "empaque": 24,
+   "sh": "sp/MAQUILLAJE_1-v3.jpg",
+   "ci": 6
+  },
+  {
    "ref": "MM5019",
    "nombre": "Pestañina",
    "linea": "Belleza y Accesorios",
@@ -6318,7 +6333,7 @@
    "archivo": "ML31.jpg",
    "disponible": true,
    "empaque": 24,
-   "sh": "sp/MAQUILLAJE_1-v2.jpg",
+   "sh": "sp/MAQUILLAJE_1-v3.jpg",
    "ci": 5
   },
   {
@@ -6598,7 +6613,7 @@
    "detalle": "5×6 cm · V7",
    "archivo": "BQY04178.jpg",
    "disponible": true,
-   "sh": "sp/MAQUILLAJE_1-v2.jpg",
+   "sh": "sp/MAQUILLAJE_1-v3.jpg",
    "ci": 0
   },
   {
@@ -6613,7 +6628,7 @@
    "archivo": "6705B.jpg",
    "disponible": true,
    "empaque": 24,
-   "sh": "sp/MAQUILLAJE_1-v2.jpg",
+   "sh": "sp/MAQUILLAJE_1-v3.jpg",
    "ci": 1
   },
   {
@@ -6628,7 +6643,7 @@
    "archivo": "6664D.jpg",
    "disponible": true,
    "empaque": 12,
-   "sh": "sp/MAQUILLAJE_1-v2.jpg",
+   "sh": "sp/MAQUILLAJE_1-v3.jpg",
    "ci": 2
   },
   {
@@ -6642,7 +6657,7 @@
    "detalle": "20×20 cm · incluye espejo",
    "archivo": "2864-56.jpg",
    "disponible": true,
-   "sh": "sp/MAQUILLAJE_1-v2.jpg",
+   "sh": "sp/MAQUILLAJE_1-v3.jpg",
    "ci": 3
   },
   {
@@ -6657,7 +6672,7 @@
    "archivo": "6693A.jpg",
    "disponible": true,
    "empaque": 12,
-   "sh": "sp/MAQUILLAJE_1-v2.jpg",
+   "sh": "sp/MAQUILLAJE_1-v3.jpg",
    "ci": 4
   },
   {
