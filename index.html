@@ -537,13 +537,13 @@ function imgSrc(p){
 function imgFallback(el,p){el.onerror=null;el.src=placeholder(p);}
 
 const PREVENTA="__PREVENTA__";
-const CONTENEDORES={C1:'Contenedor 1',C2:'Contenedor 2'};
+const CONTENEDORES={C1:'Contenedor 1',C2:'Contenedor 2',C12:'Compartida (ambos)'};
 function esPreventa(p){return !!(p&&p.preventa);}
-function contDe(p){var v=p&&p.preventa;if(v==='C1'||v==='C2')return v;if(v===true)return 'C1';return null;}
+function contDe(p){var v=p&&p.preventa;if(v==='C1'||v==='C2'||v==='C12')return v;if(v===true)return 'C1';return null;}
 function contNombre(k){return CONTENEDORES[k]||'Preventa';}
-function cartGrupos(){var g={bodega:[],C1:[],C2:[]};cartEntries().forEach(function(e){var k=contDe(e.p);(g[k]||g.bodega).push(e);});return g;}
-function gruposIt(it){var g={bodega:[],C1:[],C2:[]};(it||[]).forEach(function(x){var k=x[8];(g[k]||g.bodega).push(x);});return g;}
-function bloquesOrden(g){var out=[];if(g.bodega.length)out.push(['DISPONIBLE EN BODEGA — despacho inmediato','bodega',g.bodega]);if(g.C1.length)out.push(['PREVENTA · '+contNombre('C1'),'C1',g.C1]);if(g.C2.length)out.push(['PREVENTA · '+contNombre('C2'),'C2',g.C2]);return out;}
+function cartGrupos(){var g={bodega:[],C1:[],C2:[],C12:[]};cartEntries().forEach(function(e){var k=contDe(e.p);(g[k]||g.bodega).push(e);});return g;}
+function gruposIt(it){var g={bodega:[],C1:[],C2:[],C12:[]};(it||[]).forEach(function(x){var k=x[8];(g[k]||g.bodega).push(x);});return g;}
+function bloquesOrden(g){var out=[];if(g.bodega.length)out.push(['DISPONIBLE EN BODEGA — despacho inmediato','bodega',g.bodega]);if(g.C1.length)out.push(['PREVENTA · '+contNombre('C1'),'C1',g.C1]);if(g.C2.length)out.push(['PREVENTA · '+contNombre('C2'),'C2',g.C2]);if(g.C12.length)out.push(['PREVENTA · Compartida (Contenedor 1 y 2)','C12',g.C12]);return out;}
 function hasPreventa(){return PRODUCTOS.some(p=>esPreventa(p)&&visible(p));}
 function renderCats(){
   const box=document.getElementById('cats');
@@ -664,7 +664,7 @@ function cardEdit(p){
     '<div class="edit-row"><label>Cantidad (und)</label><input class="edit-input" type="number" value="'+(p.cantidad!=null?p.cantidad:'')+'" placeholder="Existencia disponible" onchange="editField('+p.id+',\'cantidad\',this.value)"></div>'+
     '<div class="edit-row"><label>Nota color / disponibilidad</label><input class="edit-input" value="'+(p.colores_agotados||'').replace(/"/g,'&quot;')+'" placeholder="ej. Agotado azul · Solo hay plata (vacío si todo hay)" onchange="editField('+p.id+',\'colores_agotados\',this.value)"></div>'+
     '<label class="edit-check"><input type="checkbox" '+(p.disponible!==false?'checked':'')+' onchange="editField('+p.id+',\'disponible\',this.checked)"> Disponible (visible para clientes)</label>'+
-    '<label class="edit-row"><span style="color:#ff8a3d">🔥 Preventa (contenedor)</span><select class="edit-input" onchange="editField('+p.id+',\'preventa\',this.value)"><option value=""'+(!p.preventa?' selected':'')+'>Ninguna (en bodega)</option><option value="C1"'+(contDe(p)==='C1'?' selected':'')+'>Contenedor 1</option><option value="C2"'+(contDe(p)==='C2'?' selected':'')+'>Contenedor 2</option></select></label>'+
+    '<label class="edit-row"><span style="color:#ff8a3d">🔥 Preventa (contenedor)</span><select class="edit-input" onchange="editField('+p.id+',\'preventa\',this.value)"><option value=""'+(!p.preventa?' selected':'')+'>Ninguna (en bodega)</option><option value="C1"'+(contDe(p)==='C1'?' selected':'')+'>Contenedor 1</option><option value="C2"'+(contDe(p)==='C2'?' selected':'')+'>Contenedor 2</option><option value="C12"'+(contDe(p)==='C12'?' selected':'')+'>Compartida (ambos)</option></select></label>'+
     '</div></article>';
 }
 function editField(id,field,val){
