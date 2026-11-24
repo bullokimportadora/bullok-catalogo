@@ -1872,7 +1872,7 @@
    "bulto": "384",
    "detalle": "7×7.5 cm",
    "archivo": "BLK-211.jpg",
-   "disponible": true,
+   "disponible": false,
    "sh": "sp/JUGUETERIA_3.jpg",
    "ci": 0
   },
@@ -2197,7 +2197,7 @@
    "bulto": "144",
    "detalle": "Varios diseños",
    "archivo": "BLK-366.jpg",
-   "disponible": true,
+   "disponible": false,
    "sh": "sp/JUGUETERIA_3.jpg",
    "ci": 23
   },
@@ -3211,7 +3211,7 @@
    "bulto": "480",
    "detalle": "23×32×10 cm",
    "archivo": "Y6027-M.jpg",
-   "disponible": true,
+   "disponible": false,
    "sh": "sp/REGALO_0.jpg",
    "ci": 12
   },
@@ -3614,7 +3614,7 @@
    "bulto": "6",
    "detalle": "67×54×95 cm · Blue Fire / Naranja / Multicolor",
    "archivo": "TM-1086.jpg",
-   "disponible": true,
+   "disponible": false,
    "sh": "sp/PATINES_0.jpg",
    "ci": 5
   },
@@ -3630,7 +3630,7 @@
    "disponible": true,
    "sh": "sp/PATINES_0.jpg",
    "ci": 6,
-   "colores_agotados": "Solo quedan 3 blancas y 1 negra con rosado"
+   "colores_agotados": "Solo queda 1 unidad, blanca"
   },
   {
    "ref": "XM-1XJMAX",
@@ -8350,7 +8350,7 @@
    "disponible": true,
    "sh": "sp/PINATERIA_0-v2.jpg",
    "ci": 0,
-   "colores_agotados": "Solo quedan negro y oro rosa."
+   "colores_agotados": "Solo queda oro rosa"
   },
   {
    "ref": "BLK-043",
@@ -8950,7 +8950,7 @@
    "bulto": "48",
    "detalle": "45 g",
    "archivo": "BLK-1573.jpg",
-   "disponible": true,
+   "disponible": false,
    "sh": "sp/PINATERIA_1-v4.jpg",
    "ci": 21
   },
@@ -9058,7 +9058,8 @@
    "archivo": "BLK-336.jpg",
    "disponible": true,
    "sh": "sp/PINATERIA_2-v3.jpg",
-   "ci": 4
+   "ci": 4,
+   "colores_agotados": "Agotado el rosado"
   },
   {
    "ref": "BLK-476",
