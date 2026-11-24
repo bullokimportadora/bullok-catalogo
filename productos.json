@@ -1455,9 +1455,11 @@
    "bulto": "600",
    "detalle": "22 cm",
    "archivo": "BLK-013.jpg",
-   "disponible": false,
+   "disponible": true,
    "sh": "sp/JUGUETERIA_2.jpg",
-   "ci": 4
+   "ci": 4,
+   "cantidad": 6000,
+   "preventa": "C11"
   },
   {
    "ref": "BLK-014",
@@ -1468,9 +1470,11 @@
    "bulto": "600",
    "detalle": "22 cm",
    "archivo": "BLK-014.jpg",
-   "disponible": false,
+   "disponible": true,
    "sh": "sp/JUGUETERIA_2.jpg",
-   "ci": 5
+   "ci": 5,
+   "cantidad": 6000,
+   "preventa": "C11"
   },
   {
    "ref": "BLK-018",
@@ -1481,9 +1485,11 @@
    "bulto": "600",
    "detalle": "22 cm",
    "archivo": "BLK-018.jpg",
-   "disponible": false,
+   "disponible": true,
    "sh": "sp/JUGUETERIA_2.jpg",
-   "ci": 6
+   "ci": 6,
+   "cantidad": 6000,
+   "preventa": "C11"
   },
   {
    "ref": "BLK-062",
@@ -2301,9 +2307,11 @@
    "bulto": "12",
    "detalle": "122×25 cm",
    "archivo": "BLK-410.jpg",
-   "disponible": false,
+   "disponible": true,
    "sh": "sp/JUGUETERIA_4.jpg",
-   "ci": 6
+   "ci": 6,
+   "cantidad": 48,
+   "preventa": "C11"
   },
   {
    "ref": "BLK-412",
@@ -2314,9 +2322,11 @@
    "bulto": "6",
    "detalle": "183×38 cm",
    "archivo": "BLK-412.jpg",
-   "disponible": false,
+   "disponible": true,
    "sh": "sp/JUGUETERIA_4.jpg",
-   "ci": 7
+   "ci": 7,
+   "cantidad": 48,
+   "preventa": "C11"
   },
   {
    "ref": "BLK-413",
@@ -2327,9 +2337,11 @@
    "bulto": "4",
    "detalle": "244×38 cm",
    "archivo": "BLK-413.jpg",
-   "disponible": false,
+   "disponible": true,
    "sh": "sp/JUGUETERIA_4.jpg",
-   "ci": 8
+   "ci": 8,
+   "cantidad": 32,
+   "preventa": "C11"
   },
   {
    "ref": "BLK-415",
@@ -2353,9 +2365,11 @@
    "bulto": "50",
    "detalle": "Talla #4",
    "archivo": "BLK-417.jpg",
-   "disponible": false,
+   "disponible": true,
    "sh": "sp/JUGUETERIA_4.jpg",
-   "ci": 10
+   "ci": 10,
+   "cantidad": 1000,
+   "preventa": "C11"
   },
   {
    "ref": "BLK-420",
@@ -2366,9 +2380,11 @@
    "bulto": "200",
    "detalle": "Talla #2",
    "archivo": "BLK-420.jpg",
-   "disponible": false,
+   "disponible": true,
    "sh": "sp/JUGUETERIA_4.jpg",
-   "ci": 11
+   "ci": 11,
+   "cantidad": 1400,
+   "preventa": "C11"
   },
   {
    "ref": "BLK-421",
@@ -2392,9 +2408,11 @@
    "bulto": "720",
    "detalle": "7 cm",
    "archivo": "BLK-424.jpg",
-   "disponible": false,
+   "disponible": true,
    "sh": "sp/JUGUETERIA_4.jpg",
-   "ci": 13
+   "ci": 13,
+   "cantidad": 2160,
+   "preventa": "C11"
   },
   {
    "ref": "BLK-425",
@@ -2587,9 +2605,11 @@
    "bulto": "12",
    "detalle": "20×20×20 cm",
    "archivo": "GBA-B.jpg",
-   "disponible": false,
+   "disponible": true,
    "sh": "sp/JUGUETERIA_5.jpg",
-   "ci": 3
+   "ci": 3,
+   "cantidad": 300,
+   "preventa": "C11"
   },
   {
    "ref": "H26-C1",
@@ -2914,7 +2934,9 @@
    "archivo": "4V.jpg",
    "disponible": true,
    "sh": "sp/BASCULAS_0.jpg",
-   "ci": 13
+   "ci": 13,
+   "cantidad": 1200,
+   "preventa": "C11"
   },
   {
    "ref": "BLK-427",
@@ -2966,7 +2988,9 @@
    "archivo": "DWS-JW-150.jpg",
    "disponible": true,
    "sh": "sp/BASCULAS_0.jpg",
-   "ci": 17
+   "ci": 17,
+   "cantidad": 30,
+   "preventa": "C11"
   },
   {
    "ref": "DWS-JW-300",
@@ -2979,7 +3003,9 @@
    "archivo": "DWS-JW-300.jpg",
    "disponible": true,
    "sh": "sp/BASCULAS_0.jpg",
-   "ci": 18
+   "ci": 18,
+   "cantidad": 30,
+   "preventa": "C11"
   },
   {
    "ref": "DWS-JW-500",
@@ -2992,7 +3018,9 @@
    "archivo": "DWS-JW-500.jpg",
    "disponible": true,
    "sh": "sp/BASCULAS_0.jpg",
-   "ci": 19
+   "ci": 19,
+   "cantidad": 15,
+   "preventa": "C11"
   },
   {
    "ref": "DWS-P-300",
@@ -10081,7 +10109,9 @@
    "archivo": null,
    "disponible": true,
    "sh": "sp/CONT9_0.jpg",
-   "ci": 3
+   "ci": 3,
+   "cantidad": 600,
+   "preventa": "C11"
   },
   {
    "ref": "BLK-344",
@@ -10095,7 +10125,9 @@
    "archivo": null,
    "disponible": true,
    "sh": "sp/CONT9_0.jpg",
-   "ci": 4
+   "ci": 4,
+   "cantidad": 1320,
+   "preventa": "C11"
   },
   {
    "ref": "BLK-BL3",
