@@ -2490,7 +2490,9 @@
    "archivo": "BLK-444.jpg",
    "disponible": true,
    "sh": "sp/JUGUETERIA_4.jpg",
-   "ci": 19
+   "ci": 19,
+   "cantidad": 700,
+   "preventa": "C11"
   },
   {
    "ref": "BLK-452",
