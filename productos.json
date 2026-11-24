@@ -7580,7 +7580,7 @@
    "bulto": "480",
    "detalle": "",
    "archivo": "BLK-VL4.jpg",
-   "disponible": true,
+   "disponible": false,
    "sh": "sp/HOGAR_3.jpg",
    "ci": 11
   },
@@ -7593,7 +7593,7 @@
    "bulto": "480",
    "detalle": "",
    "archivo": "BLK-VL5.jpg",
-   "disponible": true,
+   "disponible": false,
    "sh": "sp/HOGAR_3.jpg",
    "ci": 12
   },
@@ -10035,7 +10035,7 @@
    "bulto": 100,
    "detalle": "Tarro 27×4 cm (x100)",
    "archivo": null,
-   "disponible": true,
+   "disponible": false,
    "sh": "sp/CONT9_0.jpg",
    "ci": 0
   },
