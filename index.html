@@ -402,6 +402,8 @@ function init(d){
   PRODUCTOS.forEach((p,i)=>p.id=i);
   renderCats();renderGrid();updateCart();
   applyCatFromURL();
+  if(typeof wrapCap==='function')wrapCap();
+  if(typeof refrescarStock==='function')refrescarStock();
 }
 /* ---- Enlace directo a una categoria: ?cat=didacticos ---- */
 function catSlug(s){return String(s==null?'':s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]/g,'');}
@@ -436,7 +438,8 @@ function applyCatFromURL(){
 /* ---- Enlace imprimible para bodega (lista de separación) ---- */
 function b64e(s){try{return btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}catch(e){return '';}}
 function b64d(s){s=String(s).replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return decodeURIComponent(escape(atob(s)));}
-function orderPayload(no,fch){const c=custData();return {n:no,f:fch,c:{nm:c.nombre,ni:c.nit,tl:c.tel,ci:c.ciudad,di:c.direccion,ve:c.vendedor,ob:c.obs},it:cartEntries().map(e=>[e.p.ref,(e.p.nombre||e.p.ref),(e.p.detalle||''),e.q,e.u,lineEff(e),(e.p.precio||0),(e.nota||''),(contDe(e.p)||'')])};}
+function factorU(p,u){return u==='Docena'?12:(u==='Bulto'?(p.bulto||1):1);}
+function orderPayload(no,fch){const c=custData();return {n:no,f:fch,c:{nm:c.nombre,ni:c.nit,tl:c.tel,ci:c.ciudad,di:c.direccion,ve:c.vendedor,ob:c.obs},it:cartEntries().map(e=>[e.p.ref,(e.p.nombre||e.p.ref),(e.p.detalle||''),e.q,e.u,lineEff(e),(e.p.precio||0),(e.nota||''),(contDe(e.p)||''),(e.q*factorU(e.p,e.u))])};}
 function orderLink(no,fch){return location.origin+location.pathname+'#sep='+b64e(JSON.stringify(orderPayload(no,fch)));}
 function sepStyles(){return '*{box-sizing:border-box;margin:0;padding:0;}'
  +'body{font-family:Arial,Helvetica,sans-serif;color:#15161A;background:#e9edf2;font-size:13px;}'
@@ -647,10 +650,10 @@ function cardView(p){
     (p.colores_agotados?'<p style="margin:3px 0 6px;font-size:12px;font-weight:700;color:#c0392b;background:rgba(192,57,43,.08);border:1px solid rgba(192,57,43,.25);border-radius:7px;padding:6px 9px">⚠️ '+String(p.colores_agotados).replace(/</g,"&lt;")+'</p>':'')+
     '<input id="nota-'+p.id+'" class="card__nota" type="text" placeholder="🎨 Color / motivo: ej. 20 rojas, 10 azules" oninput="notaSum('+p.id+')">'+
     (p.precio!=null?'<div class="card__pe">Precio c/u $<input type="text" id="precio-'+p.id+'" inputmode="numeric" value="'+dotMiles(p.precio)+'" oninput="fmtMilesInput(this)" title="Puedes cambiar el precio antes de agregar"></div>':'')+
-    '<div class="card__actions"><div class="stepper"><button onclick="stepCard('+p.id+',-1)">−</button><input type="number" id="qty-'+p.id+'" value="1" min="1"></button><button onclick="stepCard('+p.id+',1)">+</button></div>'+
+    '<div class="card__actions"><div class="stepper"><button onclick="stepCard('+p.id+',-1)">−</button><input type="number" id="qty-'+p.id+'" value="1" min="1" oninput="__capQty('+p.id+',this)"></button><button onclick="stepCard('+p.id+',1)">+</button></div>'+
     '<button class="add-btn" id="add-'+p.id+'" onclick="addToCart('+p.id+')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg><span>Agregar</span></button></div>'+
     (p.bulto?'<p class="card__meta" style="margin-top:-2px">'+bultoTxt(p)+'</p>':'')+
-    (p.cantidad!=null&&p.cantidad>0?'<p class="card__meta" style="margin-top:3px;font-weight:700;color:'+(p.cantidad<=(p.bulto||12)?'#C25E00':'#1a8f3a')+'">'+(p.cantidad<=(p.bulto||12)?'¡Últimas unidades! ('+p.cantidad+')':'Disponibles: '+p.cantidad+' und')+'</p>':'')+
+    (p.cantidad!=null?(isTeam()?'<p class="card__meta" style="margin-top:3px;font-weight:800;color:#2f6fed">📦 Stock equipo: '+p.cantidad+' und</p>':(p.cantidad>0&&p.cantidad<=12?'<p class="card__meta" style="margin-top:3px;font-weight:700;color:#C25E00">¡Últimas unidades!</p>':'')):'')+
     '</div></article>';
 }
 function cardEdit(p){
@@ -687,6 +690,12 @@ function notaSum(id){const el=document.getElementById('nota-'+id);if(!el)return;
 function addToCart(id){const inp=document.getElementById('qty-'+id);const q=Math.max(1,parseInt(inp.value||1));const cur=cart[id]||{q:0,u:'Unidad'};const notaEl=document.getElementById('nota-'+id);let add=notaEl?String(notaEl.value||'').trim():'';if(add&&!/^\d/.test(add))add=q+' '+add;let nota=cur.nota||'';if(add)nota=nota?(nota+', '+add):add;const p=PRODUCTOS[id];const peEl=document.getElementById('precio-'+id);let pn=cur.pn;if(peEl&&/\d/.test(peEl.value)){const v=unDot(peEl.value);if(v>=0&&v!==(p.precio||0))pn=v;}cart[id]={q:cur.q+q,u:cur.u||'Unidad',pn:pn,nota:(nota||undefined)};if(notaEl)notaEl.value='';if(add){const qel=document.getElementById('qty-'+id);if(qel)qel.value='1';}saveCart();updateCart();const b=document.getElementById('add-'+id);b.classList.add('added');b.querySelector('span').textContent='Agregado';setTimeout(()=>{b.classList.remove('added');b.querySelector('span').textContent='Agregar';},1100);}
 function setQty(id,q){q=parseInt(q);if(isNaN(q)||q<=0){delete cart[id];}else{const cur=cart[id]||{u:'Unidad'};cart[id]={q:q,u:cur.u||'Unidad',pn:cur.pn,nota:cur.nota};}saveCart();updateCart();}
 function setTipo(id,u){if(cart[id]){cart[id].u=u;saveCart();updateCart();}}
+/* ===== Inventario vivo: tope a lo disponible + aviso al cliente ===== */
+function capOne(id,notify){var p=PRODUCTOS[id];if(!p||p.cantidad==null||!cart[id])return;var f=factorU(p,cart[id].u||'Unidad');var maxQ=Math.floor((p.cantidad||0)/f);if(cart[id].q>maxQ){if(maxQ<=0){delete cart[id];}else{cart[id].q=maxQ;}saveCart();updateCart();if(notify){var m=(maxQ>0?'Ajustamos '+(p.ref||'')+' a '+maxQ+' '+((cart[id]&&cart[id].u)||'Unidad')+' por disponibilidad (solo quedan '+p.cantidad+' und).':'Sin unidades disponibles de '+(p.ref||'')+' para ese empaque.');if(typeof toast==='function')toast(m);}}}
+window.__capQty=function(id,el){var p=PRODUCTOS[id];if(!p||p.cantidad==null||!el)return;var v=parseInt(el.value,10);if(isNaN(v))return;var u=(cart[id]&&cart[id].u)||'Unidad';var max=Math.floor((p.cantidad||0)/factorU(p,u));if(v>max){el.value=max>0?max:1;if(typeof toast==='function')toast('Solo hay '+p.cantidad+' und de '+(p.ref||'')+' — ajustamos la cantidad');}if(v<1&&el.value!=='')el.value=1;};
+var __capWrapped=false;
+function wrapCap(){if(__capWrapped)return;if(typeof addToCart==='function'){var oa=addToCart;window.addToCart=addToCart=function(id){oa(id);capOne(id,true);};}if(typeof setQty==='function'){var os=setQty;window.setQty=setQty=function(id,q){os(id,q);capOne(id,true);};}if(typeof setTipo==='function'){var ot=setTipo;window.setTipo=setTipo=function(id,u){ot(id,u);capOne(id,true);};}if(typeof stepCard==='function'){var ost=stepCard;window.stepCard=stepCard=function(id,d){ost(id,d);var el=document.getElementById('qty-'+id);if(el&&window.__capQty)window.__capQty(id,el);};}__capWrapped=true;}
+async function refrescarStock(){try{var r=await apiReq('/stock',{method:'GET'},6000);if(!r||!r.ok||!r.stock)return;var map=r.stock,dirty=false;PRODUCTOS.forEach(function(p){if(!Object.prototype.hasOwnProperty.call(map,p.ref))return;var v=map[p.ref];if(p.cantidad!==v){p.cantidad=v;dirty=true;}if(v<=0){if(p.disponible!==false){p.disponible=false;dirty=true;}}else if(p.disponible===false){p.disponible=true;dirty=true;}});if(dirty){renderCats();renderGrid();}}catch(e){}}
 function setPrecio(id,v){if(!cart[id])return;v=(/\d/.test(String(v))?unDot(v):null);if(v===null||v<0){delete cart[id].pn;}else{cart[id].pn=v;}saveCart();updateCart();}
 function setNota(id,v){if(!cart[id])return;v=String(v||'').trim();if(v)cart[id].nota=v;else delete cart[id].nota;saveCart();}
 function lineEff(e){return (e.pn!=null?e.pn:(e.p.precio||0));}
@@ -787,6 +796,7 @@ async function sendWhatsApp(){
   if(pre){try{pre.location.href=url;}catch(e){openLink(url);}}else{openLink(url);}
   if(editing){editingNumero=null;editingFecha=null;setEditUI(false);}
   resetOrder();
+  if(reg&&typeof refrescarStock==='function')refrescarStock();
   toast(reg?('✅ Pedido '+no+(editing?' actualizado y enviado':' enviado y registrado')):'✅ Pedido enviado (no se pudo registrar en línea)');
 }
 function buildOrderHTML(){
@@ -925,11 +935,13 @@ async function histBuscar(q){
   if(!r||!r.ok){list.innerHTML='<div class="hist-msg">'+(r&&r.status===401?'Clave vencida, vuelve a entrar al modo equipo.':'Sin conexión.')+'</div>';return;}
   var ps=r.pedidos||[];
   if(!ps.length){list.innerHTML='<div class="hist-msg">Sin pedidos'+(q?' para “'+escH(q)+'”':'')+'.</div>';return;}
-  list.innerHTML=ps.map(function(p){var f=(p.fecha||'').replace('T',' ').slice(0,16);return '<div class="hist-row"><div class="hist-main"><b>'+escH(p.numero)+'</b> · '+escH(p.cliente_nombre||'(sin nombre)')+'<span class="hist-sub">'+escH([p.ciudad,p.vendedor,f].filter(Boolean).join(' · '))+' · '+money.format(p.total||0)+'</span></div><div class="hist-actions"><button type="button" class="hist-edit" data-n="'+escH(p.numero)+'">✏️ Editar</button><button type="button" class="hist-print" data-n="'+escH(p.numero)+'">🖨 Reimprimir</button><button type="button" class="hist-del" data-n="'+escH(p.numero)+'" title="Eliminar pedido">🗑</button></div></div>';}).join('');
+  list.innerHTML=ps.map(function(p){var f=(p.fecha||'').replace('T',' ').slice(0,16);var dsp=!!p.despachado;var badge=dsp?' <span style="display:inline-block;background:#1a8f3a;color:#fff;font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:999px;vertical-align:middle">✓ Despachado</span>':'';return '<div class="hist-row"><div class="hist-main"><b>'+escH(p.numero)+'</b>'+badge+' · '+escH(p.cliente_nombre||'(sin nombre)')+'<span class="hist-sub">'+escH([p.ciudad,p.vendedor,f].filter(Boolean).join(' · '))+' · '+money.format(p.total||0)+'</span></div><div class="hist-actions"><button type="button" class="hist-edit" data-n="'+escH(p.numero)+'">✏️ Editar</button><button type="button" class="hist-print" data-n="'+escH(p.numero)+'">🖨 Reimprimir</button><button type="button" class="hist-desp" data-n="'+escH(p.numero)+'" data-d="'+(dsp?1:0)+'" title="'+(dsp?'Quitar despachado':'Marcar como despachado (al eliminar ya no devuelve inventario)')+'">'+(dsp?'↩︎ Sin despachar':'📦 Despachar')+'</button><button type="button" class="hist-del" data-n="'+escH(p.numero)+'" title="Eliminar pedido">🗑</button></div></div>';}).join('');
   list.querySelectorAll('.hist-print').forEach(function(b){b.onclick=function(){reimprimir(b.getAttribute('data-n'));};});
   list.querySelectorAll('.hist-edit').forEach(function(b){b.onclick=function(){editarPedido(b.getAttribute('data-n'));};});
+  list.querySelectorAll('.hist-desp').forEach(function(b){b.onclick=function(){despacharUI(b.getAttribute('data-n'),b.getAttribute('data-d')!=='1');};});
   list.querySelectorAll('.hist-del').forEach(function(b){b.onclick=function(){eliminarPedidoUI(b.getAttribute('data-n'));};});
 }
+async function despacharUI(numero,despachar){if(!isTeam()){toast('Entra al modo equipo primero');return;}var r=await apiPost('/pedido/despachar',{numero:numero,despachado:despachar},7000);if(r&&r.ok){toast(despachar?('Pedido '+numero+' marcado como despachado'):('Pedido '+numero+' marcado sin despachar'));var qq=document.getElementById('histQ');histBuscar(qq?qq.value.trim():'');}else{toast('No se pudo actualizar el pedido');}}
 async function reimprimir(numero){
   toast('Abriendo '+numero+'…');
   var r=await apiGet('/pedido?numero='+encodeURIComponent(numero),8000);
@@ -999,6 +1011,7 @@ async function guardarEdicion(){
   if(r&&r.ok){
     var n=editingNumero; editingNumero=null; editingFecha=null; setEditUI(false); resetOrder();
     toast('✅ Pedido '+n+' actualizado');
+    if(typeof refrescarStock==='function')refrescarStock();
     if(confirm('Pedido '+n+' actualizado. ¿Reimprimir la hoja de bodega?')) reimprimir(n);
   } else {
     alert('No se pudo guardar el cambio'+(r&&r.status===401?' (clave vencida, vuelve a entrar al modo equipo)':'.'));
@@ -1007,9 +1020,9 @@ async function guardarEdicion(){
 
 async function eliminarPedidoUI(numero){
   if(!isTeam()){toast('Entra al modo equipo primero');return;}
-  if(!confirm('¿Eliminar el pedido '+numero+'? Esta acción no se puede deshacer.'))return;
+  if(!confirm('¿Eliminar el pedido '+numero+'?\n\nSi NO está despachado, sus unidades vuelven al inventario. Esta acción no se puede deshacer.'))return;
   var r=await apiPost('/pedido/eliminar',{numero:numero},8000);
-  if(r&&r.ok){toast('Pedido '+numero+' eliminado');var q=document.getElementById('histQ');histBuscar(q?q.value.trim():'');}
+  if(r&&r.ok){toast('Pedido '+numero+' eliminado'+(r.devuelto?' · inventario devuelto':''));if(typeof refrescarStock==='function')refrescarStock();var q=document.getElementById('histQ');histBuscar(q?q.value.trim():'');}
   else{alert('No se pudo eliminar'+(r&&r.status===401?' (clave vencida, vuelve a entrar al modo equipo)':'.'));}
 }
 
