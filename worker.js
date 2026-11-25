@@ -43,21 +43,37 @@ async function ensureSchema(env) {
   await env.DB.prepare(
     `CREATE TABLE IF NOT EXISTS migraciones (clave TEXT PRIMARY KEY, aplicada TEXT)`
   ).run();
+  await env.DB.prepare(
+    `CREATE TABLE IF NOT EXISTS pedidos (
+       id INTEGER PRIMARY KEY AUTOINCREMENT, numero TEXT, fecha TEXT,
+       cliente_nombre TEXT, cliente_razon TEXT, cliente_tel TEXT, cliente_nit TEXT, cliente_cedula TEXT,
+       ciudad TEXT, direccion TEXT, vendedor TEXT, observaciones TEXT,
+       total REAL, items_json TEXT, payload_json TEXT)`
+  ).run();
+  await env.DB.prepare(
+    `CREATE TABLE IF NOT EXISTS clientes (
+       id INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, razon TEXT, nit TEXT, cedula TEXT,
+       tel TEXT, ciudad TEXT, direccion TEXT, vendedor TEXT, actualizado TEXT)`
+  ).run();
   const now = new Date().toISOString();
-  // Semilla C11 (idempotente)
-  const stmts = [];
-  for (const ref in STOCK_INICIAL) {
-    stmts.push(
-      env.DB.prepare(`INSERT OR IGNORE INTO stock (ref,cantidad,actualizado) VALUES (?,?,?)`).bind(ref, STOCK_INICIAL[ref], now)
-    );
+  // Semilla C11 + C10 SET: se corre una sola vez (guard), para que el arranque
+  // en frío sea rápido y no haga timeout la primera petición tras un deploy.
+  const yaSeed = await env.DB.prepare(`SELECT 1 FROM migraciones WHERE clave='seed_v2'`).first();
+  if (!yaSeed) {
+    const stmts = [];
+    for (const ref in STOCK_INICIAL) {
+      stmts.push(
+        env.DB.prepare(`INSERT OR IGNORE INTO stock (ref,cantidad,actualizado) VALUES (?,?,?)`).bind(ref, STOCK_INICIAL[ref], now)
+      );
+    }
+    for (const ref in STOCK_C10_SET) {
+      stmts.push(
+        env.DB.prepare(`INSERT OR IGNORE INTO stock (ref,cantidad,actualizado) VALUES (?,?,?)`).bind(ref, STOCK_C10_SET[ref], now)
+      );
+    }
+    for (let i = 0; i < stmts.length; i += 50) await env.DB.batch(stmts.slice(i, i + 50));
+    await env.DB.prepare(`INSERT OR IGNORE INTO migraciones (clave,aplicada) VALUES ('seed_v2',?)`).bind(now).run();
   }
-  // Semilla C10 SET (idempotente: solo inserta si la ref no existe)
-  for (const ref in STOCK_C10_SET) {
-    stmts.push(
-      env.DB.prepare(`INSERT OR IGNORE INTO stock (ref,cantidad,actualizado) VALUES (?,?,?)`).bind(ref, STOCK_C10_SET[ref], now)
-    );
-  }
-  for (let i = 0; i < stmts.length; i += 50) await env.DB.batch(stmts.slice(i, i + 50));
   // Compartidas C10 ADD: suma única y atómica (guard + sumas en un solo batch)
   const yaC10 = await env.DB.prepare(`SELECT 1 FROM migraciones WHERE clave='c10_add_v1'`).first();
   if (!yaC10) {

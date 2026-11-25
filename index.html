@@ -405,6 +405,8 @@ function init(d){
   applyCatFromURL();
   if(typeof wrapCap==='function')wrapCap();
   if(typeof refrescarStock==='function')refrescarStock();
+  if(typeof flushPendientes==='function')flushPendientes(true);
+  try{window.addEventListener('online',function(){if(typeof flushPendientes==='function')flushPendientes(true);});}catch(e){}
 }
 /* ---- Enlace directo a una categoria: ?cat=didacticos ---- */
 function catSlug(s){return String(s==null?'':s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]/g,'');}
@@ -783,6 +785,32 @@ function resetOrder(){
   saveCust();
   updateCart();renderGrid();closeCart();
 }
+/* ===== Red de seguridad: pedidos que no se pudieron registrar en el servidor ===== */
+function getPendientes(){try{return JSON.parse(localStorage.getItem('bullok_pendientes'))||[];}catch(e){return [];}}
+function setPendientes(a){try{localStorage.setItem('bullok_pendientes',JSON.stringify(a||[]));}catch(e){}}
+function guardarPendiente(no,fch,body){try{var a=getPendientes();a.push({no:no,fch:fch,body:body,ts:Date.now()});setPendientes(a);}catch(e){}}
+async function flushPendientes(silencioso){
+  var a=getPendientes();if(!a.length){actualizarAvisoPend();return;}
+  var quedan=[],recuperados=0;
+  for(var i=0;i<a.length;i++){
+    var ok=false;
+    try{var r=await apiPost('/pedido',a[i].body,15000);if(r&&r.ok&&r.numero){ok=true;recuperados++;}}catch(e){}
+    if(!ok)quedan.push(a[i]);
+  }
+  setPendientes(quedan);
+  actualizarAvisoPend();
+  if(recuperados){if(typeof refrescarStock==='function')refrescarStock();if(typeof toast==='function')toast('✅ '+recuperados+' pedido(s) pendientes quedaron registrados');}
+  else if(!silencioso){if(typeof toast==='function')toast('Aún no se pudieron registrar '+quedan.length+' pedido(s). Revisa la conexión.');}
+}
+function actualizarAvisoPend(){
+  var n=getPendientes().length;var el=document.getElementById('pendAviso');
+  if(!n){if(el)el.remove();return;}
+  if(!el){el=document.createElement('div');el.id='pendAviso';el.style.cssText='position:fixed;left:10px;right:10px;bottom:10px;z-index:9500;background:#fff3d6;border:1.5px solid #e9b949;color:#7a4e00;font:600 13px/1.4 Arial,sans-serif;padding:11px 13px;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.18);max-width:520px;margin:0 auto;display:flex;gap:10px;align-items:center;justify-content:space-between';document.body.appendChild(el);}
+  el.innerHTML='<span>⚠️ <b>'+n+'</b> pedido(s) salieron por WhatsApp pero NO quedaron registrados en el sistema.</span><button id="pendRetry" style="background:#e9b949;border:0;color:#3a2a00;font:700 12.5px Arial;padding:8px 12px;border-radius:8px;cursor:pointer;white-space:nowrap">Reintentar</button>';
+  var btn=document.getElementById('pendRetry');if(btn)btn.onclick=function(){btn.textContent='Reintentando…';btn.disabled=true;flushPendientes(false);};
+}
+function avisoNoRegistrado(){actualizarAvisoPend();if(typeof toast==='function')toast('⚠️ El pedido salió por WhatsApp pero NO quedó registrado — toca Reintentar abajo');}
+
 async function sendWhatsApp(){
   if(!cartEntries().length)return;
   if(!validCust())return;
@@ -791,17 +819,25 @@ async function sendWhatsApp(){
   const editing=!!(typeof editingNumero!=='undefined'&&editingNumero);
   const fch=editing?editingFecha:fechaLarga();
   let no=editing?editingNumero:null,reg=false;
+  const body=editing?null:buildOrderData(fch);
   try{
-    if(editing){const r=await apiPost('/pedido/actualizar',buildEditBody(),7000);if(r&&r.ok){reg=true;}}
-    else{const r=await apiPost('/pedido',buildOrderData(fch),6500);if(r&&r.ok&&r.numero){no=r.numero;reg=true;}}
+    if(editing){const r=await apiPost('/pedido/actualizar',buildEditBody(),15000);if(r&&r.ok){reg=true;}}
+    else{
+      let r=await apiPost('/pedido',body,15000);
+      if(!(r&&r.ok&&r.numero)&&(!r||r.status===0||r.status>=500)){r=await apiPost('/pedido',body,15000);} // reintento ante timeout/red/caída
+      if(r&&r.ok&&r.numero){no=r.numero;reg=true;}
+    }
   }catch(e){}
   if(!no)no=orderNo();
+  if(!reg&&!editing)guardarPendiente(no,fch,body);
   const url='https://wa.me/'+CONFIG.whatsapp+'?text='+encodeURIComponent(buildMessage(no,fch,reg));
   if(pre){try{pre.location.href=url;}catch(e){openLink(url);}}else{openLink(url);}
   if(editing){editingNumero=null;editingFecha=null;setEditUI(false);}
   resetOrder();
   if(reg&&typeof refrescarStock==='function')refrescarStock();
-  toast(reg?('✅ Pedido '+no+(editing?' actualizado y enviado':' enviado y registrado')):'✅ Pedido enviado (no se pudo registrar en línea)');
+  if(reg){toast('✅ Pedido '+no+(editing?' actualizado y enviado':' enviado y registrado'));}
+  else if(editing){toast('⚠️ No se pudo guardar el cambio (revisa tu conexión)');}
+  else{avisoNoRegistrado();}
 }
 function buildOrderHTML(){
   const c=custData(),esc=s=>String(s==null?'':s).replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
