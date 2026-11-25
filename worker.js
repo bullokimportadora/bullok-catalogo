@@ -26,6 +26,11 @@ function autorizado(req, env) {
 // Stock inicial (sembrado una sola vez; no pisa las existencias ya guardadas)
 const STOCK_INICIAL = {"BLK-013":6000,"BLK-014":6000,"BLK-018":6000,"BLK-410":48,"BLK-412":48,"BLK-413":32,"BLK-417":1000,"BLK-420":1400,"BLK-424":2160,"BLK-444":700,"GBA-B":300,"4V":1200,"DWS-JW-150":30,"DWS-JW-300":30,"DWS-JW-500":15,"SF-400":400,"73005":600,"BLK-344":1320,"BLK-490":6000,"WFM786454":1440,"TC04":480,"HM-109":800,"HM-67":800,"HM-61":800,"HM-55":800,"HM-1":800,"GD-12240":120,"GD1280":240,"DWS-P-150":50,"BLK-SQ23":1728,"BLK-SQ24":1728,"BLK-SQ22":1728,"BLK-SQ21":1728,"BLK-SQ20":1728,"BLK-SQ19":1728,"BLK-SQ18":1728,"BLK-SQ17":1728,"BLK-SQ16":1728,"BLK-SQ15":864,"BLK-SQ14":1728,"BLK-SQ13":1728,"BLK-GL8-2":1500,"BLK-GL8-1":1500,"BLK-GL8":1500,"BLK-489-4":1000,"BLK-489-3":1000,"BLK-489-2":1000,"BLK-489":1000,"BLK-489-1":1000,"BLK-423":2160,"BLK-422":4320,"BLK-419":2600,"BLK-418":2400,"BLK-411":48,"BLK-384":1500,"BLK-358":2000,"BLK-345":480,"BLK-066":100,"BLK-065":64,"10417":2880,"10045":800,"5511":180,"5014":480,"5012":480,"5010":400,"4807":480,"6-30":1320,"11401":40,"11402":80,"11411":30,"WX-PW02":60,"WX-PW03":60,"BLS-M503":60};
 
+// Contenedor 10 (Yino / TMJ-06). SET = refs nuevas + ya existentes sin stock en D1
+// (se insertan con su valor). ADD = compartidas, su stock C10 se SUMA al C11 ya cargado.
+const STOCK_C10_SET = {"BLK-508":720,"BLK-509":320,"BLK-513":320,"BLK-514":720,"BLK-515":2240,"BLK-506":400,"BLK-507":400,"BLK-SQ25":480,"BLK-SQ26":480,"BLK-SQ27":480,"BLK-SQ28":1440,"BLK-SQ29":160,"BLK-SQ30":1440,"BLK-SQ31":480,"BLK-SQ32":240,"BLK-SQ33":2400,"BLK-SQ34":1440,"BLK-SQ35":480,"BLK-SQ36":480,"BLK-SQ37":960,"BLK-SQ38":240,"BLK-505":3000,"BLK-504":2000,"BLK-503-60":1800,"BLK-502-60":1080,"BLK-502-80":1200,"BLK-502-100":800,"BLK-501-60":1800,"BLK-501-80":1200,"BLK-500-S":1200,"BLK-500-M":1080,"BLK-500-L":900,"BLK-498":500,"BLK-J23":864,"BLK-J24":864,"BLK-J17":864,"BLK-J18":864,"BLK-J19":864,"BLK-J20":864,"BLK-J21":864,"BLK-J29":480,"BLK-J30":480,"BLK-GL17":500,"BLK-GL17-1":500,"BLK-GL17-2":500,"BLK-GL17-3":500,"BLK-GL18":500,"BLK-GL18-1":500,"BLK-GL19":500,"BLK-493":100,"BLK-GL22":500,"BLK-GL23":1000,"BLK-GL24":1000,"BLK-J28":480,"BLK-J33":240,"BLK-J25":324,"BLK-GL16":500,"BLK-GL16-1":500,"BLK-GL16-2":500,"BLK-GL16-3":500,"BLK-491":300,"BLK-491-1":300,"BLK-491-2":300,"BLK-491-3":300,"BLK-491-4":300,"BLK-491-5":600,"BLK-GL20":500,"BLK-GL21":500,"BLK-GL21-1":500,"BLK-GL21-2":500,"BLK-478":576,"BLK-479":864,"BLK-1600":55,"BLK-BL1":400,"BLK-BL2":400,"BLK-BL3":400,"BLK-BL4":400,"BLK-BL5":480,"BLK-BL6":480,"BLK-426":1000,"179-7":4000,"BLK-103":600,"K905CTDS":72,"K905CTDM":48,"K905CTDL":36};
+const STOCK_C10_ADD = {"6-30":1980,"73005":360,"GBA-B":120,"BLK-344":2500,"BLK-358":1000};
+
 let schemaReady = false;
 async function ensureSchema(env) {
   if (schemaReady || !env.DB) return;
@@ -35,14 +40,36 @@ async function ensureSchema(env) {
   await env.DB.prepare(
     `CREATE TABLE IF NOT EXISTS pedido_stock (numero TEXT PRIMARY KEY, aplicado INTEGER DEFAULT 0, despachado INTEGER DEFAULT 0, unidades_json TEXT, actualizado TEXT)`
   ).run();
+  await env.DB.prepare(
+    `CREATE TABLE IF NOT EXISTS migraciones (clave TEXT PRIMARY KEY, aplicada TEXT)`
+  ).run();
   const now = new Date().toISOString();
+  // Semilla C11 (idempotente)
   const stmts = [];
   for (const ref in STOCK_INICIAL) {
     stmts.push(
       env.DB.prepare(`INSERT OR IGNORE INTO stock (ref,cantidad,actualizado) VALUES (?,?,?)`).bind(ref, STOCK_INICIAL[ref], now)
     );
   }
+  // Semilla C10 SET (idempotente: solo inserta si la ref no existe)
+  for (const ref in STOCK_C10_SET) {
+    stmts.push(
+      env.DB.prepare(`INSERT OR IGNORE INTO stock (ref,cantidad,actualizado) VALUES (?,?,?)`).bind(ref, STOCK_C10_SET[ref], now)
+    );
+  }
   for (let i = 0; i < stmts.length; i += 50) await env.DB.batch(stmts.slice(i, i + 50));
+  // Compartidas C10 ADD: suma única y atómica (guard + sumas en un solo batch)
+  const yaC10 = await env.DB.prepare(`SELECT 1 FROM migraciones WHERE clave='c10_add_v1'`).first();
+  if (!yaC10) {
+    const m = [ env.DB.prepare(`INSERT OR IGNORE INTO migraciones (clave,aplicada) VALUES ('c10_add_v1',?)`).bind(now) ];
+    for (const ref in STOCK_C10_ADD) {
+      m.push(
+        env.DB.prepare(`INSERT INTO stock (ref,cantidad,actualizado) VALUES (?,?,?) ON CONFLICT(ref) DO UPDATE SET cantidad = cantidad + ?, actualizado = ?`)
+          .bind(ref, STOCK_C10_ADD[ref], now, STOCK_C10_ADD[ref], now)
+      );
+    }
+    await env.DB.batch(m);
+  }
   schemaReady = true;
 }
 
