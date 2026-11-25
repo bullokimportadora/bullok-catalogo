@@ -893,6 +893,8 @@ function teamSync(){
   var pb=document.getElementById('pedidosBtn');if(pb)pb.style.display=on?'':'none';
   var tb=document.getElementById('teamBtn');if(tb)tb.textContent=on?'👥 Equipo activo':'👥 Modo equipo';
   if(!on){var cr=document.getElementById('cliRes');if(cr)cr.innerHTML='';var av=document.getElementById('cliAviso');if(av)av.style.display='none';}
+  if(typeof renderGrid==='function'&&typeof PRODUCTOS!=='undefined'&&PRODUCTOS&&PRODUCTOS.length)renderGrid();
+  if(on&&typeof refrescarStock==='function')refrescarStock();
 }
 
 var _cliT=null;
