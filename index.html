@@ -441,7 +441,7 @@ function b64e(s){try{return btoa(unescape(encodeURIComponent(s))).replace(/\+/g,
 function b64d(s){s=String(s).replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return decodeURIComponent(escape(atob(s)));}
 function factorU(p,u){return u==='Docena'?12:(u==='Bulto'?(p.bulto||1):1);}
 function orderPayload(no,fch){const c=custData();return {n:no,f:fch,c:{nm:c.nombre,ni:c.nit,tl:c.tel,ci:c.ciudad,di:c.direccion,ve:c.vendedor,ob:c.obs},it:cartEntries().map(e=>[e.p.ref,(e.p.nombre||e.p.ref),(e.p.detalle||''),e.q,e.u,lineEff(e),(e.p.precio||0),(e.nota||''),(contDe(e.p)||''),(e.q*factorU(e.p,e.u))])};}
-function orderLink(no,fch){return location.origin+location.pathname+'#sep='+b64e(JSON.stringify(orderPayload(no,fch)));}
+function orderLink(no,fch,reg){return reg?(location.origin+location.pathname+'#ped='+encodeURIComponent(no)):(location.origin+location.pathname+'#sep='+b64e(JSON.stringify(orderPayload(no,fch))));}
 function sepStyles(){return '*{box-sizing:border-box;margin:0;padding:0;}'
  +'body{font-family:Arial,Helvetica,sans-serif;color:#15161A;background:#e9edf2;font-size:13px;}'
  +'.sep-bar{position:sticky;top:0;z-index:5;display:flex;gap:10px;justify-content:center;padding:10px;background:#15161A;}'
@@ -524,8 +524,11 @@ function checkSep(){
   try{renderSep(data);}catch(e){return false;}
   return true;
 }
+function pedHash(){var m=(location.hash||'').match(/[#&]ped=([^&]+)/);return m?decodeURIComponent(m[1]):'';}
 const SEP=checkSep();
-if(!SEP)fetch('productos.json').then(r=>r.ok?r.json():Promise.reject()).then(init).catch(()=>init(INLINE));
+const PEDN=SEP?'':pedHash();
+if(PEDN){try{document.body.innerHTML='<div style="font-family:Arial,sans-serif;padding:48px 20px;text-align:center;color:#444;font-size:15px">Cargando pedido '+String(PEDN).replace(/[<>&]/g,'')+'…</div>';}catch(e){}}
+else if(!SEP)fetch('productos.json').then(r=>r.ok?r.json():Promise.reject()).then(init).catch(()=>init(INLINE));
 
 function placeholder(p){
   const c=SUB_COLORS[p.sub]||'#175CE6';
@@ -728,7 +731,7 @@ function toggleCust(force){const c=document.getElementById('custForm');if(!c)ret
 function validCust(){if(!custOpen)toggleCust(true);const req=['cNombre','cTel','cCiudad','cDireccion'];let ok=true,first=null;req.forEach(id=>{const el=document.getElementById(id);const bad=!el.value.trim();el.classList.toggle('err',bad);if(bad){ok=false;first=first||el;}});if(first){first.focus();first.scrollIntoView({block:'center',behavior:'smooth'});}return ok;}
 function orderNo(){const d=new Date(),p=n=>String(n).padStart(2,'0');return 'BLK-'+String(d.getFullYear()).slice(2)+p(d.getMonth()+1)+p(d.getDate())+'-'+p(d.getHours())+p(d.getMinutes());}
 function fechaLarga(){return new Date().toLocaleString('es-CO',{day:'2-digit',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'});}
-function buildMessage(no,fch){
+function buildMessage(no,fch,reg){
   const c=custData(),NL='\n';
   const L=cartEntries();
   no=no||orderNo();fch=fch||fechaLarga();
@@ -763,7 +766,7 @@ function buildMessage(no,fch){
   if(c.obs)d+=NL+'📝 *OBSERVACIONES:* '+c.obs+NL;
   d+=NL+'————————'+NL;
   d+='🖨 *Imprimir para bodega* (lista de separación):'+NL;
-  d+=orderLink(no,fch)+NL;
+  d+=orderLink(no,fch,reg)+NL;
   return d;
 }
 function openLink(url){
@@ -793,7 +796,7 @@ async function sendWhatsApp(){
     else{const r=await apiPost('/pedido',buildOrderData(fch),6500);if(r&&r.ok&&r.numero){no=r.numero;reg=true;}}
   }catch(e){}
   if(!no)no=orderNo();
-  const url='https://wa.me/'+CONFIG.whatsapp+'?text='+encodeURIComponent(buildMessage(no,fch));
+  const url='https://wa.me/'+CONFIG.whatsapp+'?text='+encodeURIComponent(buildMessage(no,fch,reg));
   if(pre){try{pre.location.href=url;}catch(e){openLink(url);}}else{openLink(url);}
   if(editing){editingNumero=null;editingFecha=null;setEditUI(false);}
   resetOrder();
@@ -1044,6 +1047,24 @@ async function eliminarPedidoUI(numero){
   var ec=document.getElementById('editCancel');if(ec)ec.onclick=cancelarEdicion;
   ['cTel','cDireccion'].forEach(function(id){var e=document.getElementById(id);if(e){['focus','input'].forEach(function(ev){e.addEventListener(ev,function(){e.classList.remove('confirm-field');});});}});
   teamSync();
+})();
+
+/* ---- Abrir un pedido por número desde el link de bodega (#ped=) ---- */
+(async function(){
+  if(typeof PEDN==='undefined'||!PEDN)return;
+  function err(msg){try{document.body.innerHTML='<div style="font-family:Arial,sans-serif;padding:48px 20px;text-align:center;color:#444;font-size:15px;line-height:1.55">No se pudo abrir el pedido <b>'+String(PEDN).replace(/[<>&]/g,'')+'</b>.<br><br>'+msg+'<br><br><a href="'+location.pathname+'" style="color:#2f6fed;font-weight:600">Ir al catálogo</a></div>';}catch(e){}}
+  async function traer(){return await apiGet('/pedido?numero='+encodeURIComponent(PEDN),9000);}
+  var r=await traer();
+  if(r&&r.status===401){
+    var k=prompt('Para abrir el pedido '+PEDN+' ingresa la clave del equipo Bullok:');
+    if(k!==null&&k.trim()){setTeamKey(k.trim());r=await traer();}
+  }
+  if(r&&r.ok&&r.payload){
+    var data=r.payload;data.n=r.numero||PEDN;if(r.fecha&&!data.f)data.f=r.fecha;
+    try{renderSep(data);}catch(e){err('Ocurrió un error al mostrarlo.');}
+  }else if(r&&r.status===401){err('Clave incorrecta o sin acceso al equipo.');}
+  else if(r&&r.status===404){err('El pedido no existe en el sistema.');}
+  else{err('Revisa tu conexión e inténtalo de nuevo.');}
 })();
 function saveCart(){try{localStorage.setItem('bullok_cart',JSON.stringify(cart));}catch(e){}}
 function loadCart(){try{const raw=JSON.parse(localStorage.getItem('bullok_cart'))||{};const o={};Object.keys(raw).forEach(k=>{const v=raw[k];if(v&&typeof v==='object'){const q=Math.max(1,parseInt(v.q)||1);o[k]={q:q,u:v.u||'Unidad',pn:(typeof v.pn==='number'?v.pn:undefined),nota:(typeof v.nota==='string'?v.nota:undefined)};}else{const n=parseInt(v);if(n>0)o[k]={q:n,u:'Unidad'};}});return o;}catch(e){return {};}}
