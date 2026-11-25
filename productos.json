@@ -11143,7 +11143,8 @@
    "sh": "sp/CONT11_1.jpg",
    "ci": 22,
    "cantidad": 2000,
-   "preventa": "C11"
+   "preventa": "C11",
+   "bloqueado": true
   },
   {
    "ref": "BLK-345",
